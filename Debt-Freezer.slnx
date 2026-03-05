@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="AuthentificationService/AuthentificationService.csproj" />
+  <Project Path="ChallengeService/ChallengeService.csproj" />
+  <Project Path="DebtService/DebtService.csproj" />
+  <Project Path="Gateway/Gateway.csproj" />
+  <Project Path="PaymentService/PaymentService.csproj" />
+  <Project Path="StrategyService/StrategyService.csproj" />
+</Solution>
