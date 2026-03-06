@@ -2514,11 +2514,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj",
+      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
       "projectName": "AuthentificationService",
-      "projectPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj",
+      "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
       "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\obj\\",
+      "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

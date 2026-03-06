@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DebtService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DebtService.Data
 {
@@ -7,6 +8,6 @@ namespace DebtService.Data
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<String> Orders { get; set; }
+        public DbSet<Debt> Debts { get; set; }
     }
 }

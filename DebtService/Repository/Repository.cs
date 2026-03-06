@@ -1,6 +1,9 @@
-﻿namespace DebtService.Repository
+﻿using DebtService.Data;
+using DebtService.Models;
+
+namespace DebtService.Repository
 {
-    public class Repository : IRepository<Order>
+    public class Repository : IRepository<Debt>
     {
 
         private AppDbContext _db;
@@ -9,21 +12,21 @@
         {
             _db = appDb;
         }
-        public Order Create(Order entity)
+        public Debt Create(Debt entity)
         {
             _db.Add(entity);
             _db.SaveChanges();
             return entity;
         }
 
-        public List<Order> GetAll()
+        public List<Debt> GetAll()
         {
-            return _db.Orders.ToList();
+            return _db.Debts.ToList();
         }
 
-        public Order GetById(int id)
+        public Debt GetById(int id)
         {
-            return _db.Orders.Find(id);
+            return _db.Debts.Find(id);
         }
     }
 }

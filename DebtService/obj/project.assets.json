@@ -2016,11 +2016,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\DebtService\\DebtService.csproj",
+      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\DebtService.csproj",
       "projectName": "DebtService",
-      "projectPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\DebtService\\DebtService.csproj",
+      "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\DebtService.csproj",
       "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\DebtService\\obj\\",
+      "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
