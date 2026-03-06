@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W86Ewj9V/3Q=",
+  "dgSpecHash": "Xeyvd+2aA8I=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
+  "projectFilePath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrateur\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
     "C:\\Users\\Administrateur\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

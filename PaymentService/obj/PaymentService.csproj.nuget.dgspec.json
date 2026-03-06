@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrateur\\Desktop\\asp.net\\Projet final\\Api\\DebtFreezer\\PaymentService\\PaymentService.csproj": {}
+    "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\PaymentService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrateur\\Desktop\\asp.net\\Projet final\\Api\\DebtFreezer\\PaymentService\\PaymentService.csproj": {
+    "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\PaymentService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrateur\\Desktop\\asp.net\\Projet final\\Api\\DebtFreezer\\PaymentService\\PaymentService.csproj",
+        "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\PaymentService.csproj",
         "projectName": "PaymentService",
-        "projectPath": "C:\\Users\\Administrateur\\Desktop\\asp.net\\Projet final\\Api\\DebtFreezer\\PaymentService\\PaymentService.csproj",
+        "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\PaymentService.csproj",
         "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrateur\\Desktop\\asp.net\\Projet final\\Api\\DebtFreezer\\PaymentService\\obj\\",
+        "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
