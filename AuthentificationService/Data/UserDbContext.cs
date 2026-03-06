@@ -25,8 +25,16 @@ namespace AuthentificationService.Data
                     entity.HasIndex(x => x.Email).IsUnique(); 
                     entity.Property(x => x.Email).IsRequired(); 
                     entity.Property(x => x.FullName).IsRequired(); 
-                    entity.Property(x => x.PasswordHash).IsRequired(); 
-            }); 
+                    entity.Property(x => x.PasswordHash).IsRequired();
+                    entity.Property(x => x.MonthlyRepaymentBudget)
+                          .HasPrecision(10, 2)          // Pomelo EF Core
+                          .IsRequired();
+                    // enum stocké en int
+                    entity.Property(x => x.RepaymentStrategy)
+                          .HasConversion<int>()
+                          .HasDefaultValue(StrategyType.Snowball)
+                          .IsRequired();
+                }); 
         }
     }
 

@@ -26,10 +26,14 @@ namespace DebtService.Services
             // Vérifie unicité email
             var exists = await _users.ExistsByEmailAsync(email);
             if (exists)
-                throw new InvalidOperationException("EMAIL_ALREADY_IN_USE");
+                throw new InvalidOperationException("L'email saisi est déjà utilisé");
 
             // Crée user + hash password
-            var user = new User(email, fullName, _hasher.Hash(dto.Password));
+            var user = new User(email, fullName, _hasher.Hash(dto.Password))
+            {
+                MonthlyRepaymentBudget = dto.MonthlyRepaymentBudget,
+                RepaymentStrategy = dto.RepaymentStrategy
+            };
 
             await _users.AddAsync(user);
             await _users.SaveChangesAsync();
@@ -79,7 +83,9 @@ namespace DebtService.Services
             {
                 UserId = user.UserId,
                 Email = user.Email,
-                FullName = user.FullName
+                FullName = user.FullName,
+                MonthlyRepaymentBudget = user.MonthlyRepaymentBudget,
+                RepaymentStrategy = user.RepaymentStrategy
             };
         }
     }

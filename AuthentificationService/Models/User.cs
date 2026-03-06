@@ -20,6 +20,13 @@ namespace AuthentificationService.Models
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
 
+        // Budget mensuel de remboursement (ex: 500.00)
+        [Range(0, 1_000_000)]
+        public decimal MonthlyRepaymentBudget { get; set; } = 0m;
+
+        // Stratégie choisie
+        public StrategyType RepaymentStrategy { get; set; } = StrategyType.Snowball;
+
         // Constructeur vide (utile pour EF + object initializer)
         public User() { }
 
