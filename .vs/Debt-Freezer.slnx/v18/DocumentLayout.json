@@ -1,42 +1,74 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\",
+  "WorkspaceRootPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\debtservice\\controllers\\debtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\controllers\\debtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3DB48B4F-AF0F-4A6E-BC31-5B2403904DD1}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\debtservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{3DB48B4F-AF0F-4A6E-BC31-5B2403904DD1}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\debtservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\debtservice\\dtos\\debtreceive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\dtos\\debtreceive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3DB48B4F-AF0F-4A6E-BC31-5B2403904DD1}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\debtservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DB48B4F-AF0F-4A6E-BC31-5B2403904DD1}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\debtservice\\dtos\\debtsend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\dtos\\debtsend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\dtos\\createpaymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\dtos\\createpaymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\services\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\services\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\dtos\\paymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\dtos\\paymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\dtos\\updatepaymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\dtos\\updatepaymentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\debt-freezer\\authentificationservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD21DEE5-5B46-4D6A-9DD5-222FA270AF30}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Migrations\\20260306111830_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PaymentService\\Migrations\\20260306111830_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\debtservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{64A63ED6-4F3D-FC79-EAE2-C250EF7FF633}|DebtService\\DebtService.csproj|solutionrelative:debtservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\authentificationservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\authentificationservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\services\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\services\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\services\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\paymentservice\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DDA886F-7022-E231-A5D2-8BDF0FBB44D6}|PaymentService\\PaymentService.csproj|solutionrelative:paymentservice\\repository\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,123 +78,227 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\DebtService\\appsettings.json",
-              "RelativeDocumentMoniker": "DebtService\\appsettings.json",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\DebtService\\appsettings.json",
-              "RelativeToolTip": "DebtService\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-05T15:21:50.58Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\appsettings.json",
-              "RelativeDocumentMoniker": "AuthentificationService\\appsettings.json",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\appsettings.json",
-              "RelativeToolTip": "AuthentificationService\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-05T15:21:48.39Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\DebtService\\Program.cs",
-              "RelativeDocumentMoniker": "DebtService\\Program.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\DebtService\\Program.cs",
-              "RelativeToolTip": "DebtService\\Program.cs",
+              "Title": "Service.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Services\\Service.cs",
+              "RelativeDocumentMoniker": "DebtService\\Services\\Service.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Services\\Service.cs",
+              "RelativeToolTip": "DebtService\\Services\\Service.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:21:13.79Z",
+              "WhenOpened": "2026-03-06T12:47:53.694Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Program.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Program.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Program.cs",
-              "RelativeToolTip": "AuthentificationService\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAA==",
+              "Title": "DebtReceive.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Dtos\\DebtReceive.cs",
+              "RelativeDocumentMoniker": "DebtService\\Dtos\\DebtReceive.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Dtos\\DebtReceive.cs",
+              "RelativeToolTip": "DebtService\\Dtos\\DebtReceive.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:21:09.27Z",
+              "WhenOpened": "2026-03-06T12:45:57.307Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Service.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Services\\Service.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Services\\Service.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Services\\Service.cs",
-              "RelativeToolTip": "AuthentificationService\\Services\\Service.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "DebtSend.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Dtos\\DebtSend.cs",
+              "RelativeDocumentMoniker": "DebtService\\Dtos\\DebtSend.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Dtos\\DebtSend.cs",
+              "RelativeToolTip": "DebtService\\Dtos\\DebtSend.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:21:03.303Z",
+              "WhenOpened": "2026-03-06T12:45:53.065Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IService.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Services\\IService.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Services\\IService.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Services\\IService.cs",
-              "RelativeToolTip": "AuthentificationService\\Services\\IService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "DebtController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Controllers\\DebtController.cs",
+              "RelativeDocumentMoniker": "DebtService\\Controllers\\DebtController.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\Controllers\\DebtController.cs",
+              "RelativeToolTip": "DebtService\\Controllers\\DebtController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:21:00.603Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Repository\\Repository.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Repository\\Repository.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Repository\\Repository.cs",
-              "RelativeToolTip": "AuthentificationService\\Repository\\Repository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:20:52.227Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Repository\\IRepository.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Repository\\IRepository.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Repository\\IRepository.cs",
-              "RelativeToolTip": "AuthentificationService\\Repository\\IRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:20:48.059Z",
+              "WhenOpened": "2026-03-06T11:20:07.093Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "AuthentificationService\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAhAAAAAAAAAA==",
+              "Title": "20260306111830_initial.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Migrations\\20260306111830_initial.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Migrations\\20260306111830_initial.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Migrations\\20260306111830_initial.cs",
+              "RelativeToolTip": "PaymentService\\Migrations\\20260306111830_initial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T15:20:32.886Z",
+              "WhenOpened": "2026-03-06T11:18:31.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\appsettings.json",
+              "RelativeDocumentMoniker": "DebtService\\appsettings.json",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\DebtService\\appsettings.json",
+              "RelativeToolTip": "DebtService\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-06T11:18:25.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Repository\\Repository.cs",
+              "RelativeDocumentMoniker": "AuthentificationService\\Repository\\Repository.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Repository\\Repository.cs",
+              "RelativeToolTip": "AuthentificationService\\Repository\\Repository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:17:46.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Service.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Services\\Service.cs",
+              "RelativeDocumentMoniker": "AuthentificationService\\Services\\Service.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Services\\Service.cs",
+              "RelativeToolTip": "AuthentificationService\\Services\\Service.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:17:25.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\appsettings.json",
+              "RelativeDocumentMoniker": "PaymentService\\appsettings.json",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\appsettings.json",
+              "RelativeToolTip": "PaymentService\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-06T11:14:26.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PaymentService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Services\\PaymentService.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Services\\PaymentService.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Services\\PaymentService.cs",
+              "RelativeToolTip": "PaymentService\\Services\\PaymentService.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAcwHQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:13:29.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IPaymentService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Services\\IPaymentService.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Services\\IPaymentService.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Services\\IPaymentService.cs",
+              "RelativeToolTip": "PaymentService\\Services\\IPaymentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:13:28.269Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UpdatePaymentDto.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\UpdatePaymentDto.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Dtos\\UpdatePaymentDto.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\UpdatePaymentDto.cs",
+              "RelativeToolTip": "PaymentService\\Dtos\\UpdatePaymentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:13:01.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PaymentDto.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\PaymentDto.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Dtos\\PaymentDto.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\PaymentDto.cs",
+              "RelativeToolTip": "PaymentService\\Dtos\\PaymentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:12:54.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CreatePaymentDto.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\CreatePaymentDto.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Dtos\\CreatePaymentDto.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Dtos\\CreatePaymentDto.cs",
+              "RelativeToolTip": "PaymentService\\Dtos\\CreatePaymentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:12:39.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "PaymentService\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:12:11.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Repository\\Repository.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Repository\\Repository.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Repository\\Repository.cs",
+              "RelativeToolTip": "PaymentService\\Repository\\Repository.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAowBUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:11:39.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Repository\\IRepository.cs",
+              "RelativeDocumentMoniker": "PaymentService\\Repository\\IRepository.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\PaymentService\\Repository\\IRepository.cs",
+              "RelativeToolTip": "PaymentService\\Repository\\IRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T11:11:37.481Z",
               "EditorCaption": ""
             }
           ]
