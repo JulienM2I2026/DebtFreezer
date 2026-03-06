@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\StrategyService\\StrategyService.csproj",
+      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\StrategyService\\StrategyService.csproj",
       "projectName": "StrategyService",
-      "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\StrategyService\\StrategyService.csproj",
+      "projectPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\StrategyService\\StrategyService.csproj",
       "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\StrategyService\\obj\\",
+      "outputPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\StrategyService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

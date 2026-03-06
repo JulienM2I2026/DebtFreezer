@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj": {}
+    "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj": {
+    "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
+        "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj",
         "projectName": "AuthentificationService",
-        "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\AuthentificationService.csproj",
+        "projectPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\AuthentificationService.csproj",
         "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\AuthentificationService\\obj\\",
+        "outputPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\AuthentificationService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -71,6 +71,14 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[10.1.4, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[10.1.4, )"
             }
           },
           "imports": [

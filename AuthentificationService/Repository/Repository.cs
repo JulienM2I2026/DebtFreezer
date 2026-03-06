@@ -1,29 +1,39 @@
-﻿namespace AuthentificationService.Repository
+﻿using AuthentificationService.Data;
+using AuthentificationService.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace AuthentificationService.Repository
 {
-    public class Repository : IRepository<Order>
+    public class Repository<T> : IRepository<T> where T : class
     {
+        private UserDbContext _db;
+        private readonly DbSet<T> _set;
 
-        private AppDbContext _db;
-
-        public Repository(AppDbContext appDb)
+        public Repository(UserDbContext db)
         {
-            _db = appDb;
-        }
-        public Order Create(Order entity)
-        {
-            _db.Add(entity);
-            _db.SaveChanges();
-            return entity;
+            _db = db;
+            _set = db.Set<T>();
         }
 
-        public List<Order> GetAll()
-        {
-            return _db.Orders.ToList();
-        }
+        public async Task<T?> GetByIdAsync(object id)
+        => await _set.FindAsync(id);
 
-        public Order GetById(int id)
-        {
-            return _db.Orders.Find(id);
-        }
+        public async Task<List<T>> GetAllAsync()
+            => await _set.ToListAsync();
+
+        public IQueryable<T> Query()
+            => _set.AsQueryable();
+
+        public async Task AddAsync(T entity)
+            => await _set.AddAsync(entity);
+
+        public void Update(T entity)
+            => _set.Update(entity);
+
+        public void Delete(T entity)
+            => _set.Remove(entity);
+
+        public async Task SaveChangesAsync()
+            => await _db.SaveChangesAsync();
     }
 }

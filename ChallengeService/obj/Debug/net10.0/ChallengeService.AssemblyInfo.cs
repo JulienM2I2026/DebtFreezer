@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChallengeService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+745ac6a4a18f29178c3f081e191c61481554f608")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChallengeService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChallengeService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

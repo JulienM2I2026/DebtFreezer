@@ -2,9 +2,15 @@
 {
     public interface IRepository<T>
     {
+        Task<T?> GetByIdAsync(object id);
+        Task<List<T>> GetAllAsync();
 
-        T GetById(int id);
-        List<T> GetAll();
-        T Create(T entity);
+        IQueryable<T> Query(); // pour filtres/tri/pagination au niveau service
+
+        Task AddAsync(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+
+        Task SaveChangesAsync();
     }
 }
