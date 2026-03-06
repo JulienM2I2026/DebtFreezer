@@ -1,62 +1,62 @@
-﻿using DebtService.Repository;
+﻿using DebtService.Dtos;
+using DebtService.Enums;
+using DebtService.Models;
+using DebtService.Repository;
+using DebtService.RestClient;
 
 namespace DebtService.Services
 {
-    public class Service : IService<OrderSend, OrderReceive>
+    public class Service : IService<DebtSend, DebtReceive>
     {
 
-        private readonly IRepository<Order> _repository;
-        private readonly Client<ProductSend> _client;
+        private readonly IRepository<Debt> _repository;
+        private readonly Client<DebtSend> _client;
 
-        public Service(IRepository<Order> repository)
+        public Service(IRepository<Debt> repository)
         {
             _repository = repository;
-            _client = new Client<ProductSend>("http://localhost:5066/api/Product/");
+            _client = new Client<DebtSend>("http://localhost:5066/api/Product/");
         }
 
-        public Task<OrderSend> Create(OrderReceive receive)
+        public Task<DebtSend> Create(DebtReceive receive)
         {
-            Order order = DtoToEntity(receive);
-            _repository.Create(order);
-            return EntityToDto(order);
+            Debt debt = DtoToEntity(receive);
+            _repository.Create(debt);
+            return EntityToDto(debt);
 
             //return EntityToDto(_repository.Create(DtoToEntity(receive)));
         }
 
-        public async Task<List<OrderSend>> GetAll()
+        public async Task<List<DebtSend>> GetAll()
         {
-            List<Order> orders = _repository.GetAll();
-            List<OrderSend> orderSends = new List<OrderSend>();
-            foreach (Order send in orders)
+            List<Debt> debts = _repository.GetAll();
+            List<DebtSend> debtSends = new List<DebtSend>();
+            foreach (Debt send in debts)
             {
-                orderSends.Add(await EntityToDto(send));
+                debtSends.Add(await EntityToDto(send));
             }
-            return orderSends;
+            return debtSends;
         }
 
-        public async Task<OrderSend> GetById(int id)
+        public async Task<DebtSend> GetById(int id)
         {
             return await EntityToDto(_repository.GetById(id));
         }
 
 
-        private Order DtoToEntity(OrderReceive receive)
+        private Debt DtoToEntity(DebtReceive receive)
         {
-            return new Order() { CommandeNumber = receive.commandeNumber, ProductIds = receive.productIds };
+            return new Debt() { UserId = receive.UserId, Creditor = receive.Creditor, OriginalAmount = receive.OriginalAmount, InterestRate = receive.InterestRate, DueDate = receive.DueDate, Type = receive.Type, Status = receive.Status };
         }
 
-        private async Task<OrderSend> EntityToDto(Order order)
+
+        private async Task<DebtSend> EntityToDto(Debt debt)
         {
-            OrderSend send = new OrderSend() { Id = order.Id, CommandeNumber = order.CommandeNumber };
+            DebtSend send = new DebtSend() { Id = debt.Id, UserId = debt.UserId, Creditor = debt.Creditor, OriginalAmount = debt.OriginalAmount, InterestRate = debt.InterestRate, DueDate = debt.DueDate, Type = debt.Type, Status = debt.Status };
 
-
-            foreach (var productId in order.ProductIds)
-            {
-                send.Product.Add(await _client.GetRequest(productId.ToString()));
-            }
-
-            Console.WriteLine(send);
+            // Il faudra mettre le UserName plus tard
 
             return send;
         }
     }
+}

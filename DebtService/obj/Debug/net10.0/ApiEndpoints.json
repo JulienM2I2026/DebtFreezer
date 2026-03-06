@@ -1,0 +1,44 @@
+[
+  {
+    "ContainingType": "DebtService.Controllers.DebtController",
+    "Method": "GetAll",
+    "RelativePath": "api/Debt",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DebtService.Controllers.DebtController",
+    "Method": "Create",
+    "RelativePath": "api/Debt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "receive",
+        "Type": "DebtService.Dtos.DebtReceive",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DebtService.Controllers.DebtController",
+    "Method": "GetById",
+    "RelativePath": "api/Debt/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
