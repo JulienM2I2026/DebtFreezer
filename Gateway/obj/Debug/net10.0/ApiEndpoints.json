@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Gateway.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDto",
+        "Type": "Gateway.Dtos.LoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Gateway.Controllers.DebtController",
     "Method": "GetAll",
     "RelativePath": "api/Debt",

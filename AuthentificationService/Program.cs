@@ -89,9 +89,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("VitePolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:8080", "http://localhost:5099")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+app.UseCors("VitePolicy");
 
 // Swagger en dev
 if (app.Environment.IsDevelopment())

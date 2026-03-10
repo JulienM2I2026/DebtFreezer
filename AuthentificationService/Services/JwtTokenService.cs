@@ -50,7 +50,6 @@ namespace AuthentificationService.Services
 
             // 6) Sérialisation en string
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
             return (token, expiresAtUtc);
         }
     }

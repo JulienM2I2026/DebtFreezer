@@ -1,32 +1,34 @@
 ﻿using DebtService.Data;
 using DebtService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DebtService.Repository
 {
     public class Repository : IRepository<Debt>
     {
 
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public Repository(AppDbContext appDb)
         {
             _db = appDb;
         }
-        public Debt Create(Debt entity)
+        public async Task<Debt> CreateAsync(Debt entity)
         {
             _db.Add(entity);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return entity;
         }
 
-        public List<Debt> GetAll()
+
+        public async Task<List<Debt>> GetAllAsync()
         {
-            return _db.Debts.ToList();
+            return await _db.Debts.ToListAsync();
         }
 
-        public Debt GetById(int id)
+        public async Task<Debt?> GetByIdAsync(int id)
         {
-            return _db.Debts.Find(id);
+            return await _db.Debts.FindAsync(id);
         }
     }
 }

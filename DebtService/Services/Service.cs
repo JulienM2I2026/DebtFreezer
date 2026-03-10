@@ -18,18 +18,16 @@ namespace DebtService.Services
             _client = new Client<DebtSend>("http://localhost:5066/api/Product/");
         }
 
-        public Task<DebtSend> Create(DebtReceive receive)
+        public async Task<DebtSend> Create(DebtReceive receive)
         {
             Debt debt = DtoToEntity(receive);
-            _repository.Create(debt);
-            return EntityToDto(debt);
-
-            //return EntityToDto(_repository.Create(DtoToEntity(receive)));
+            await _repository.CreateAsync(debt);
+            return await EntityToDto(debt);
         }
 
         public async Task<List<DebtSend>> GetAll()
         {
-            List<Debt> debts = _repository.GetAll();
+            List<Debt> debts = await _repository.GetAllAsync();
             List<DebtSend> debtSends = new List<DebtSend>();
             foreach (Debt send in debts)
             {
@@ -40,7 +38,12 @@ namespace DebtService.Services
 
         public async Task<DebtSend> GetById(int id)
         {
-            return await EntityToDto(_repository.GetById(id));
+            Debt? debt = await _repository.GetByIdAsync(id);
+
+            if (debt == null)
+                throw new Exception("Debt not found");
+
+            return await EntityToDto(debt);
         }
 
 

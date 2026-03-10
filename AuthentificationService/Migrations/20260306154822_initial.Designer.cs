@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthentificationService.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260306130328_FixDefaultRepaymentStrategy")]
-    partial class FixDefaultRepaymentStrategy
+    [Migration("20260306154822_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

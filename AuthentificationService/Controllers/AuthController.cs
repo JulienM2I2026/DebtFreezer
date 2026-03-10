@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace AuthentificationService.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;

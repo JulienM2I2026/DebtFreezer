@@ -63,7 +63,6 @@ namespace DebtService.Services
                 throw new UnauthorizedAccessException("Le mot de passe ou l'email saisi est incorrect");
 
             var (token, exp) = _jwt.CreateAccessToken(user);
-
             return new AuthDto
             {
                 UserId = user.UserId,

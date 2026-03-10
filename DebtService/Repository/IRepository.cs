@@ -3,8 +3,8 @@
     public interface IRepository<T>
     {
 
-        T GetById(int id);
-        List<T> GetAll();
-        T Create(T entity);
+        Task<T?> GetByIdAsync(int id);
+        Task<List<T>> GetAllAsync();
+        Task<T> CreateAsync(T entity);
     }
 }

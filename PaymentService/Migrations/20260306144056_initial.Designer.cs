@@ -12,7 +12,7 @@ using PaymentService.Data;
 namespace PaymentService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260306111830_initial")]
+    [Migration("20260306144056_initial")]
     partial class initial
     {
         /// <inheritdoc />

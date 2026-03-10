@@ -1,11 +1,8 @@
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.exe
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\appsettings.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.staticwebassets.endpoints.json
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.exe
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.deps.json
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.runtimeconfig.json
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.dll
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.pdb
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\rpswa.dswa.cache.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.AssemblyInfoInputs.cache
@@ -25,5 +22,8 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\refint\Gateway.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.pdb
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.deps.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.runtimeconfig.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.pdb
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.genruntimeconfig.cache
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\ref\Gateway.dll

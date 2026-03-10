@@ -1,13 +1,18 @@
 ﻿using System.Text;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Gateway.RestClient
 {
     public class Client<TSent, TPost>
     {
-
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
+
+        private readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
         public Client(string baseUrl)
         {
@@ -21,10 +26,10 @@ namespace Gateway.RestClient
             if (!response.IsSuccessStatusCode) throw new Exception("Error while fetching ressource");
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<TSent>(json);
+            var result = JsonSerializer.Deserialize<TSent>(json, _jsonOptions);
+
             return result ?? throw new Exception("Result null");
         }
-
 
         public async Task<List<TSent>> GetRequestList(string url)
         {
@@ -32,10 +37,10 @@ namespace Gateway.RestClient
             if (!response.IsSuccessStatusCode) throw new Exception("Error while fetching ressource");
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<List<TSent>>(json);
+            var result = JsonSerializer.Deserialize<List<TSent>>(json, _jsonOptions);
+
             return result ?? throw new Exception("Result null");
         }
-
 
         public async Task<TSent> PostRequest(string url, TPost postElement)
         {
@@ -48,9 +53,9 @@ namespace Gateway.RestClient
             if (!response.IsSuccessStatusCode) throw new Exception("Error while fetching ressource");
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<TSent>(json);
-            return result ?? throw new Exception("Result null");
+            var result = JsonSerializer.Deserialize<TSent>(json, _jsonOptions);
 
+            return result ?? throw new Exception("Result null");
         }
     }
 }
