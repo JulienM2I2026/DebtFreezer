@@ -1,8 +1,13 @@
+using Gateway.Filter;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<TokenValidationFilter>();
+});
 builder.Services.AddHttpClient("AuthService", client =>
 {
     client.Timeout = TimeSpan.FromSeconds(5);

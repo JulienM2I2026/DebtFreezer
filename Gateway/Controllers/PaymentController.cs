@@ -1,8 +1,8 @@
 ﻿using Gateway.Dtos;
 using Gateway.Filter;
 using Gateway.RestClient;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -11,19 +11,20 @@ namespace Gateway.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [RequireValidToken]
-    public class DebtController : ControllerBase
+    public class PaymentController : ControllerBase
     {
-        private readonly Client<DebtSend, DebtReceive> _client;
+        private readonly Client<PaymentDto, CreatePaymentDto> _client;
 
 
-        public DebtController()
+        public PaymentController()
         {
-            _client = new Client<DebtSend, DebtReceive>("http://localhost:5193/api/Debt");
+            _client = new Client<PaymentDto, CreatePaymentDto>("http://localhost:5272/api/Payment");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            Console.WriteLine("Gateway Payment GetAll");
             var claim = User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claim == null)
@@ -31,10 +32,10 @@ namespace Gateway.Controllers
 
             var userId = claim.Value;
 
-            var debts = await _client.GetRequestList($"?userId={userId}");
-            Console.WriteLine(JsonSerializer.Serialize(debts)); // voir toutes les propriétés
+            var payments = await _client.GetRequestList($"?userId={userId}");
+            Console.WriteLine(JsonSerializer.Serialize(payments));
 
-            return Ok(debts);
+            return Ok(payments);
         }
 
         [HttpGet("{id}")]
@@ -44,18 +45,11 @@ namespace Gateway.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] DebtReceive receive)
+        public async Task<IActionResult> Create([FromBody] CreatePaymentDto receive)
         {
-            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-
-            if (claim == null)
-            {
-                return Unauthorized("UserId manquant dans le token");
-            }
-
-            var userId = Guid.Parse(claim.Value);
-            receive.UserId = userId;
             var result = await _client.PostRequest("", receive);
+            Console.WriteLine("juste avant le renvoi au web");
+            Console.WriteLine(JsonSerializer.Serialize(result)); // voir toutes les propriétés
             return Ok(result);
         }
     }

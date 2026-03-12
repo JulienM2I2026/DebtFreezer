@@ -2,7 +2,7 @@
 {
     public enum DebtStatus
     {
-        ACTIVE,
-        PAID_OFF
+        ACTIVE = 0,
+        PAID_OFF = 1,
     }
 }

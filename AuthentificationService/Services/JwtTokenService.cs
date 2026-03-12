@@ -20,8 +20,8 @@ namespace AuthentificationService.Services
             var key = _config["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key missing");
 
             // 2) Durée de validité
-            var expiresMinutesStr = _config["Jwt:ExpiresMinutes"] ?? "60";
-            if (!int.TryParse(expiresMinutesStr, out var expiresMinutes)) expiresMinutes = 60;
+            var expiresMinutesStr = _config["Jwt:ExpiresMinutes"] ?? "1440";
+            if (!int.TryParse(expiresMinutesStr, out var expiresMinutes)) expiresMinutes = 1440;
 
             var expiresAtUtc = DateTime.UtcNow.AddMinutes(expiresMinutes);
 
@@ -30,11 +30,11 @@ namespace AuthentificationService.Services
             // - email (standard) : email
             // - fullName (custom) : info utile côté UI / logs (facultatif)
             var claims = new List<Claim>
-        {
-            new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email),
-            new("fullName", user.FullName)
-        };
+            {
+                new(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new(ClaimTypes.Email, user.Email),
+                new("fullName", user.FullName)
+            };
 
             // 4) Signature : clé symétrique HMAC-SHA256
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));

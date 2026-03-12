@@ -60,5 +60,12 @@ namespace AuthentificationService.Controllers
 
             return Ok(me);
         }
+
+        [HttpGet("/ping")]
+        [Authorize]
+        public IActionResult Ping()
+        {
+            return Ok("Token Valide");
+        }
     }
 }

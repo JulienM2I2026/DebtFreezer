@@ -1,4 +1,4 @@
-﻿namespace Gateway.Dtos
+﻿namespace PaymentService.Dtos
 {
     public class DebtReceive
     {

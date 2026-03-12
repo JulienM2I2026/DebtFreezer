@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DebtService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260306092048_Initial")]
-    partial class Initial
+    [Migration("20260311092033_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,14 +47,17 @@ namespace DebtService.Migrations
                     b.Property<double>("OriginalAmount")
                         .HasColumnType("double");
 
+                    b.Property<double>("RemainingAmount")
+                        .HasColumnType("double");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

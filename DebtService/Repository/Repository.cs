@@ -20,6 +20,12 @@ namespace DebtService.Repository
             return entity;
         }
 
+        public async Task<List<Debt>> GetByUserIdAsync(Guid userId)
+        {
+            return await _db.Debts
+                .Where(d => d.UserId == userId)
+                .ToListAsync();
+        }
 
         public async Task<List<Debt>> GetAllAsync()
         {
@@ -30,5 +36,20 @@ namespace DebtService.Repository
         {
             return await _db.Debts.FindAsync(id);
         }
+
+        public async Task<bool> UpdateAsync(Debt entity)
+        {
+            _db.Update(entity);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<Debt?> GetByUserAndDebtIdAsync(Guid userId, int debtId)
+        {
+            return await _db.Debts
+                .Where(d => d.UserId == userId && d.Id == debtId)
+                .FirstOrDefaultAsync();  // retourne null si aucune correspondance
+        }
+
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum DebtType
     {
-        CREDIT_CARD,
-        PERSONAL_LOAN
+        CREDIT_CARD = 0,
+        PERSONAL_LOAN = 1,
     }
 }

@@ -17,6 +17,17 @@ builder.Services.AddDbContext<AppDbContext>(option => option.UseMySql(connection
 builder.Services.AddScoped<IRepository<Debt>, Repository>();
 builder.Services.AddScoped<IService<DebtSend, DebtReceive>, Service>();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("VitePolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5099", "http://localhost:5272")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

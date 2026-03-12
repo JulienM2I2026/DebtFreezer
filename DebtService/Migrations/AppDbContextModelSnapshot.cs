@@ -44,14 +44,17 @@ namespace DebtService.Migrations
                     b.Property<double>("OriginalAmount")
                         .HasColumnType("double");
 
+                    b.Property<double>("RemainingAmount")
+                        .HasColumnType("double");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

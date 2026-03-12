@@ -157,4 +157,3 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Payment
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\PaymentService.pdb
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\PaymentService.genruntimeconfig.cache
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\ref\PaymentService.dll
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

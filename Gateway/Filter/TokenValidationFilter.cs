@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net.Http.Headers;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Gateway.Filter
 {
@@ -26,7 +28,6 @@ namespace Gateway.Filter
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-
             var hasAttribute = context.ActionDescriptor.EndpointMetadata.OfType<RequireValidTokenAttribute>().Any();
 
             if (!hasAttribute)
@@ -48,9 +49,23 @@ namespace Gateway.Filter
             if (!isValid)
             {
                 _logger.LogWarning("Token Refusé pour {Action}", context.ActionDescriptor.DisplayName);
-                context.Result = new UnauthorizedObjectResult(new { error = "Token invalide ou experé" });
+                context.Result = new UnauthorizedObjectResult(new { error = "Token invalide ou expiré" });
                 return;
             }
+
+            if (token.StartsWith("Bearer "))
+            {
+                token = token.Substring(7);
+            }
+
+            // Lire les claims du JWT
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Injecter les claims dans HttpContext.User
+            var identity = new ClaimsIdentity(jwtToken.Claims, "Bearer");
+            context.HttpContext.User = new ClaimsPrincipal(identity);
+
 
             await next();
 
@@ -61,14 +76,13 @@ namespace Gateway.Filter
         {
             try
             {
-                var baseUrl = _config["AuthService:BaseUrl"] ?? throw new InvalidOperationException("AuthService:BaseUrl non configuré.");
-
+                var baseUrl = _config["AuthentificationService:BaseUrl"] ?? throw new InvalidOperationException("AuthService:BaseUrl non configuré.");
                 if (token.StartsWith("Bearer "))
                 {
                     token = token.Substring(7);
                 }
 
-                var client = _httpClientFactory.CreateClient("AuthService");
+                var client = _httpClientFactory.CreateClient("AuthentificationService");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var reponse = await client.GetAsync($"{baseUrl}/ping");

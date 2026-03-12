@@ -1,4 +1,5 @@
 ﻿using DebtService.Dtos;
+using DebtService.Models;
 using DebtService.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,22 @@ namespace DebtService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] Guid userId)
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAllByUserId(userId));
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok(await _service.GetById(id));
+        }
+
+        /*
+        [HttpGet]
+        public async Task<IActionResult> GetByIdAndUserId([FromQuery] Guid userId, int DebtId)
+        {
+            return Ok(await _service.GetByUserAndDebtId(userId, DebtId));
         }
 
         [HttpGet("{id}")]
@@ -31,13 +45,25 @@ namespace DebtService.Controllers
             }
             return Ok(debt);
         }
-
+        */
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DebtReceive receive)
         {
-            var order = await _service.Create(receive);
-            return CreatedAtAction(nameof(Create), order);
+            Console.WriteLine("Service Create Debt");
+            receive.RemainingAmount = receive.OriginalAmount;
+            receive.Status = 0;
+            var debt = await _service.Create(receive);
+            return CreatedAtAction(nameof(Create), debt);
+
+        }
+
+        [HttpPost("{id:int}")]
+        public async Task<IActionResult> UpdateDebtAmount(int id, [FromBody] double amount)
+        {
+            Console.WriteLine("Service UpdateDebtAmount");
+            var debt = await _service.UpdateDebtAmount(id, amount);
+            return CreatedAtAction(nameof(Create), debt);
 
         }
     }

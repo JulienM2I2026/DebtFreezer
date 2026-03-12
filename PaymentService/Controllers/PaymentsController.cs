@@ -1,23 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using PaymentService.Dtos;
+using PaymentService.Models;
 using PaymentService.Services;
+using System.Text.Json;
 
 namespace PaymentService.Controllers;
 
+[Route("api/[controller]")]
 [ApiController]
-[Route("api/v1/payments")]
-public class PaymentsController : ControllerBase
+public class PaymentController : ControllerBase
 {
     private readonly IPaymentService _service;
 
-    public PaymentsController(IPaymentService service)
+    public PaymentController(IPaymentService service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<PaymentDto>>> GetAll()
-        => Ok(await _service.GetAllAsync());
+    public async Task<ActionResult<List<PaymentDto>>> GetAll([FromQuery] Guid userId)
+    {
+        Console.WriteLine("Payment Controller GetAll");
+        var payments = await _service.GetAllAsync();
+        Console.WriteLine(JsonSerializer.Serialize(payments)); // voir toutes les propriétés
+        return Ok(payments);
+    }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PaymentDto>> GetById(int id)
@@ -37,7 +45,9 @@ public class PaymentsController : ControllerBase
         try
         {
             var created = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            Console.WriteLine("juste avant le renvoi au gateway");
+            Console.WriteLine(JsonSerializer.Serialize(created)); // voir toutes les propriétés
+            return Ok(created);
         }
         catch (KeyNotFoundException ex)
         {
