@@ -1,4 +1,4 @@
-﻿using PaymentService.Dtos;
+﻿  using PaymentService.Dtos;
 using PaymentService.Models;
 using PaymentService.Repository;
 using PaymentService.RestClient;
@@ -12,12 +12,18 @@ public class PaymentService : IPaymentService
     private readonly IRepository<Payment> _paymentRepository;
     private readonly Client<DebtSend, DebtReceive> _client;
     private readonly Client<bool, double> _createClient;
+    private readonly IConfiguration _config;
 
-    public PaymentService(IRepository<Payment> paymentRepository)
+    public PaymentService(IRepository<Payment> paymentRepository, IConfiguration config)
     {
         _paymentRepository = paymentRepository;
-        _client = new Client<DebtSend, DebtReceive>("http://localhost:5193/api/Debt/");
-        _createClient = new Client<bool, double>("http://localhost:5193/api/Debt/");
+
+        _config = config;
+        var debtServiceUrl = _config["ServiceUrls:DebtService"];
+
+        _client = new Client<DebtSend, DebtReceive>($"{debtServiceUrl}/api/Debt/");
+        _createClient = new Client<bool, double>($"{debtServiceUrl}/api/Debt/");
+
     }
 
     public async Task<List<PaymentDto>> GetAllAsync()
@@ -44,7 +50,10 @@ public class PaymentService : IPaymentService
 
     public async Task<PaymentDto> CreateAsync(CreatePaymentDto dto)
     {
-        await _createClient.PostRequest(dto.DebtId.ToString(), (double)dto.Amount);
+        bool response = await _createClient.PostRequest(dto.DebtId.ToString(), (double)dto.Amount);
+        if (!response)
+            throw new Exception("Erreur lors de la mise à jour de la dette");
+
         var payment = new Payment
         {
             DebtId = dto.DebtId,
@@ -52,7 +61,6 @@ public class PaymentService : IPaymentService
             PaymentDate = dto.PaymentDate ?? DateTime.UtcNow,
             Notes = dto.Notes
         };
-
         await _paymentRepository.AddAsync(payment);
         await _paymentRepository.SaveChangesAsync();
 

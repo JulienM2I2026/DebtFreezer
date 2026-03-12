@@ -1,5 +1,6 @@
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\appsettings.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\appsettings.Production.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\PaymentService.staticwebassets.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\PaymentService.exe
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\bin\Debug\net10.0\PaymentService.deps.json
@@ -151,6 +152,7 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Payment
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\PaymentS.0CEDD34D.Up2Date
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\PaymentService.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\PaymentService\obj\Debug\net10.0\refint\PaymentService.dll

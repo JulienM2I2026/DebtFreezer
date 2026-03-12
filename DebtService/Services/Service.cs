@@ -1,7 +1,6 @@
 ﻿using DebtService.Dtos;
 using DebtService.Models;
 using DebtService.Repository;
-using DebtService.RestClient;
 using System.Text.Json;
 
 namespace DebtService.Services
@@ -10,12 +9,10 @@ namespace DebtService.Services
     {
 
         private readonly IRepository<Debt> _repository;
-        private readonly Client<DebtSend> _client;
 
         public Service(IRepository<Debt> repository)
         {
             _repository = repository;
-            _client = new Client<DebtSend>("http://localhost:5066/api/Product/");
         }
 
 

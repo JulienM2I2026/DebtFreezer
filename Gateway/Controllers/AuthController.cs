@@ -12,11 +12,14 @@ namespace Gateway.Controllers
 
         private readonly Client<AuthDto, LoginDto> clientLogin;
         private readonly Client<AuthDto, RegisterDto> clientRegister;
+        private readonly IConfiguration _config;
 
-        public AuthController()
+        public AuthController(IConfiguration config)
         {
-            clientLogin = new Client<AuthDto, LoginDto>("http://localhost:5130/api/Auth/");
-            clientRegister = new Client<AuthDto, RegisterDto>("http://localhost:5130/api/Auth/");
+            _config = config;
+            var authServiceUrl = _config["ServiceUrls:AuthService"];
+            clientLogin = new Client<AuthDto, LoginDto>($"{authServiceUrl}/api/Auth/");
+            clientRegister = new Client<AuthDto, RegisterDto>($"{authServiceUrl}/api/Auth/");
         }
 
         [HttpPost("login")]

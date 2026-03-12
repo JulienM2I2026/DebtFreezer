@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
+      "RelativeMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-03-12T14:49:24.313Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,13 +1,6 @@
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.csproj.AssemblyReference.cache
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\rpswa.dswa.cache.json
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.AssemblyInfoInputs.cache
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.AssemblyInfo.cs
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.csproj.CoreCompileInputs.cache
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.sourcelink.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\appsettings.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\appsettings.Production.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\DebtService.staticwebassets.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\DebtService.exe
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\DebtService.deps.json
@@ -102,6 +95,14 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtSer
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.csproj.AssemblyReference.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.AssemblyInfoInputs.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.AssemblyInfo.cs
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.sourcelink.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -111,6 +112,7 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtSer
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtServ.CA0A4098.Up2Date
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\DebtService.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\DebtService\obj\Debug\net10.0\refint\DebtService.dll

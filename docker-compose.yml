@@ -1,0 +1,80 @@
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: formation
+    ports:
+      - "3307:3306"   # ← port host changé de 3306 à 3307
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - microservices-network
+
+  authservice:
+    build: ./AuthentificationService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - mysql
+    networks:
+      - microservices-network
+
+  challengeservice:
+    build: ./ChallengeService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - mysql
+    networks:
+      - microservices-network
+
+  debtservice:
+    build: ./DebtService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - mysql
+    networks:
+      - microservices-network
+
+  paymentservice:
+    build: ./PaymentService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - mysql
+    networks:
+      - microservices-network
+
+  strategyservice:
+    build: ./StrategyService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - mysql
+    networks:
+      - microservices-network
+
+  gateway:
+    build: ./Gateway
+    ports:
+      - "5099:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - authservice
+      - challengeservice
+      - debtservice
+      - paymentservice
+      - strategyservice
+    networks:
+      - microservices-network
+
+volumes:
+  mysql_data:
+
+networks:
+  microservices-network:

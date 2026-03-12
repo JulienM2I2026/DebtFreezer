@@ -14,11 +14,13 @@ namespace Gateway.Controllers
     public class DebtController : ControllerBase
     {
         private readonly Client<DebtSend, DebtReceive> _client;
+        private readonly IConfiguration _config;
 
-
-        public DebtController()
+        public DebtController(IConfiguration config)
         {
-            _client = new Client<DebtSend, DebtReceive>("http://localhost:5193/api/Debt");
+            _config = config;
+            var authServiceUrl = _config["ServiceUrls:DebtService"];
+            _client = new Client<DebtSend, DebtReceive>($"{authServiceUrl}/api/Debt");
         }
 
         [HttpGet]

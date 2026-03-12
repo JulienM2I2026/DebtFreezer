@@ -14,11 +14,13 @@ namespace Gateway.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly Client<PaymentDto, CreatePaymentDto> _client;
+        private readonly IConfiguration _config;
 
-
-        public PaymentController()
+        public PaymentController(IConfiguration config)
         {
-            _client = new Client<PaymentDto, CreatePaymentDto>("http://localhost:5272/api/Payment");
+            _config = config;
+            var PaymentServiceUrl = _config["ServiceUrls:PaymentService"];
+            _client = new Client<PaymentDto, CreatePaymentDto>($"{PaymentServiceUrl}/api/Payment");
         }
 
         [HttpGet]
