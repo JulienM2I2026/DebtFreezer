@@ -1,17 +1,13 @@
-import {
-  mockDebts,
-  debtEvolutionData,
-  paymentHistoryData,
-  debtByTypeData,
-} from "@/lib/mockData";
+import { useState, useEffect, useMemo } from "react";
+import { debtEvolutionData } from "@/lib/mockData";
+import { getDebts } from "@/apis/DebtApi";
+import { getPayments } from "@/apis/PaymentApi";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
-  TrendingDown,
   CreditCard,
   Percent,
-  Calendar,
   DollarSign,
   Trophy,
   Flame,
@@ -20,6 +16,11 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+
+const DEBT_TYPE_COLORS = ["hsl(239, 84%, 67%)", "hsl(142, 71%, 45%)", "hsl(217, 91%, 60%)"];
+const DEBT_TYPE_NAMES: Record<number, string> = {
+  0: "Carte crédit", 1: "Crédit personnel", 2: "Crédit étudiant"
+};
 import {
   LineChart,
   Line,
@@ -90,20 +91,67 @@ const StatCard = ({
 );
 
 const Dashboard = () => {
-  const totalDebt = mockDebts.reduce((sum, d) => sum + d.remainingAmount, 0);
-  const totalOriginal = mockDebts.reduce((sum, d) => sum + d.originalAmount, 0);
-  const totalInterestWeighted =
-    mockDebts.reduce((sum, d) => sum + d.interestRate * d.remainingAmount, 0) /
-    totalDebt;
-  const avgRate = totalInterestWeighted.toFixed(1);
-  const paidPercent = Math.round(
-    ((totalOriginal - totalDebt) / totalOriginal) * 100
-  );
-  const monthlyMinPayments = mockDebts.reduce((sum, d) => sum + d.minPayment, 0);
+  const [debts, setDebts] = useState<any[]>([]);
+  const [payments, setPayments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const highestRateDebt = [...mockDebts].sort(
-    (a, b) => b.interestRate - a.interestRate
-  )[0];
+  useEffect(() => {
+    async function loadData() {
+      const [debtsData, paymentsData] = await Promise.all([getDebts(), getPayments()]);
+      setDebts(debtsData ?? []);
+      setPayments(paymentsData ?? []);
+      setLoading(false);
+    }
+    loadData();
+  }, []);
+
+  const totalDebt = useMemo(() => debts.reduce((sum, d) => sum + d.remainingAmount, 0), [debts]);
+  const totalOriginal = useMemo(() => debts.reduce((sum, d) => sum + d.originalAmount, 0), [debts]);
+  const activeDebts = useMemo(() => debts.filter((d) => d.status === 0), [debts]);
+
+  const avgRate = useMemo(() => {
+    if (totalDebt === 0) return "0.0";
+    return (debts.reduce((sum, d) => sum + d.interestRate * d.remainingAmount, 0) / totalDebt).toFixed(1);
+  }, [debts, totalDebt]);
+
+  const paidPercent = totalOriginal > 0
+    ? Math.round(((totalOriginal - totalDebt) / totalOriginal) * 100)
+    : 0;
+
+  const highestRateDebt = useMemo(
+    () => [...debts].sort((a, b) => b.interestRate - a.interestRate)[0],
+    [debts]
+  );
+
+  // Paiements groupés par mois pour le bar chart
+  const paymentHistoryData = useMemo(() => {
+    const grouped: Record<string, number> = {};
+    payments.forEach((p) => {
+      const month = new Date(p.paymentDate).toLocaleDateString("fr-FR", { month: "short", year: "2-digit" });
+      grouped[month] = (grouped[month] ?? 0) + p.amount;
+    });
+    return Object.entries(grouped).map(([month, paid]) => ({ month, paid: Math.round(paid as number) })).slice(-6);
+  }, [payments]);
+
+  // Répartition par type de dette pour le pie chart
+  const debtByTypeData = useMemo(() => {
+    const types = [...new Set(debts.map((d) => d.type))] as number[];
+    return types
+      .map((type, i) => ({
+        name: DEBT_TYPE_NAMES[type] ?? `Type ${type}`,
+        value: Math.round(debts.filter((d) => d.type === type).reduce((s, d) => s + d.remainingAmount, 0)),
+        fill: DEBT_TYPE_COLORS[i % DEBT_TYPE_COLORS.length],
+      }))
+      .filter((d) => d.value > 0);
+  }, [debts]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-muted-foreground">Chargement des données…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-fade-in pb-8">
@@ -128,20 +176,23 @@ const Dashboard = () => {
               Synthèse de ta situation
             </h2>
             <p className="text-sm text-muted-foreground">
-              Tu as remboursé {paidPercent}% de ta dette totale. En gardant ton
-              rythme actuel, ta date estimée de sortie de dette est <strong>mars 2028</strong>.
+              {debts.length === 0
+                ? "Aucune dette enregistrée. Commence par ajouter tes dettes."
+                : `Tu as remboursé ${paidPercent}% de ta dette totale.`}
             </p>
-            <p className="text-sm text-muted-foreground">
-              La dette la plus coûteuse actuellement est{" "}
-              <strong>{highestRateDebt.creditor}</strong> avec un taux de{" "}
-              <strong>{highestRateDebt.interestRate}%</strong>.
-            </p>
+            {highestRateDebt && (
+              <p className="text-sm text-muted-foreground">
+                La dette la plus coûteuse est{" "}
+                <strong>{highestRateDebt.creditor}</strong> avec un taux de{" "}
+                <strong>{highestRateDebt.interestRate}%</strong>.
+              </p>
+            )}
           </div>
         </div>
       </Card>
 
       {/* KPI cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         <StatCard
           icon={Wallet}
           label="Dette restante"
@@ -152,7 +203,7 @@ const Dashboard = () => {
         <StatCard
           icon={CreditCard}
           label="Dettes actives"
-          value={String(mockDebts.length)}
+          value={String(activeDebts.length)}
           sub="Réparties sur plusieurs types"
         />
         <StatCard
@@ -162,16 +213,10 @@ const Dashboard = () => {
           sub="Calculé sur les soldes restants"
         />
         <StatCard
-          icon={Calendar}
-          label="Date estimée debt-free"
-          value="Mars 2028"
-          sub="Selon ton rythme actuel"
-        />
-        <StatCard
           icon={DollarSign}
-          label="Mensualités minimales"
-          value={`$${monthlyMinPayments.toLocaleString()}`}
-          sub="Hors budget supplémentaire"
+          label="Paiements enregistrés"
+          value={String(payments.length)}
+          sub={`Total : $${payments.reduce((s, p) => s + p.amount, 0).toLocaleString()}`}
         />
       </div>
 
@@ -180,22 +225,19 @@ const Dashboard = () => {
         <div className="w-10 h-10 rounded-full bg-success-foreground/20 flex items-center justify-center shrink-0">
           <Flame className="h-5 w-5 text-success-foreground" />
         </div>
-
         <div className="flex-1">
           <p className="text-success-foreground font-semibold text-sm">
-            14 jours de régularité : tu as effectué des paiements de manière
-            constante. Continue ainsi !
+            {payments.length > 0
+              ? `${payments.length} paiement(s) enregistré(s). Continue sur ta lancée !`
+              : "Enregistre ton premier paiement pour démarrer ton suivi."}
           </p>
           <p className="text-success-foreground/75 text-xs mt-0.5">
-            Tu fais partie des profils les plus réguliers ce mois-ci.
+            Chaque paiement te rapproche de la liberté financière.
           </p>
         </div>
-
         <div className="flex items-center gap-2">
           <Trophy className="h-4 w-4 text-success-foreground/80" />
-          <span className="text-xs text-success-foreground/80">
-            3 badges débloqués
-          </span>
+          <span className="text-xs text-success-foreground/80">Objectif : zéro dette</span>
         </div>
       </Card>
 
@@ -250,47 +292,44 @@ const Dashboard = () => {
               Répartition par type
             </h3>
             <p className="text-sm text-muted-foreground">
-              Identifie les catégories de dettes les plus lourdes.
+              Catégories de dettes les plus lourdes.
             </p>
           </div>
 
-          <ResponsiveContainer width="100%" height={220}>
-            <PieChart>
-              <Pie
-                data={debtByTypeData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={82}
-                innerRadius={50}
-                strokeWidth={0}
-              >
-                {debtByTypeData.map((entry, i) => (
-                  <Cell key={i} fill={entry.fill} />
+          {debtByTypeData.length > 0 ? (
+            <>
+              <ResponsiveContainer width="100%" height={220}>
+                <PieChart>
+                  <Pie
+                    data={debtByTypeData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={82}
+                    innerRadius={50}
+                    strokeWidth={0}
+                  >
+                    {debtByTypeData.map((entry, i) => (
+                      <Cell key={i} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="space-y-3 mt-3">
+                {debtByTypeData.map((d) => (
+                  <div key={d.name} className="flex items-center gap-2 text-sm rounded-xl bg-muted/20 px-3 py-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: d.fill }} />
+                    <span className="text-muted-foreground">{d.name}</span>
+                    <span className="ml-auto font-medium text-card-foreground">${d.value.toLocaleString()}</span>
+                  </div>
                 ))}
-              </Pie>
-              <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
-            </PieChart>
-          </ResponsiveContainer>
-
-          <div className="space-y-3 mt-3">
-            {debtByTypeData.map((d) => (
-              <div
-                key={d.name}
-                className="flex items-center gap-2 text-sm rounded-xl bg-muted/20 px-3 py-2"
-              >
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ background: d.fill }}
-                />
-                <span className="text-muted-foreground">{d.name}</span>
-                <span className="ml-auto font-medium text-card-foreground">
-                  ${d.value.toLocaleString()}
-                </span>
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center py-10">Aucune dette enregistrée.</p>
+          )}
         </Card>
       </div>
 
@@ -310,27 +349,21 @@ const Dashboard = () => {
           </Badge>
         </div>
 
-        <ResponsiveContainer width="100%" height={240}>
-          <BarChart data={paymentHistoryData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 89%)" />
-            <XAxis
-              dataKey="month"
-              tick={{ fontSize: 12 }}
-              stroke="hsl(220, 10%, 46%)"
-            />
-            <YAxis
-              tick={{ fontSize: 12 }}
-              stroke="hsl(220, 10%, 46%)"
-              tickFormatter={(v) => `$${v}`}
-            />
-            <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, "Montant payé"]} />
-            <Bar
-              dataKey="paid"
-              fill="hsl(142, 71%, 45%)"
-              radius={[6, 6, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+        {paymentHistoryData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={paymentHistoryData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 89%)" />
+              <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="hsl(220, 10%, 46%)" />
+              <YAxis tick={{ fontSize: 12 }} stroke="hsl(220, 10%, 46%)" tickFormatter={(v) => `$${v}`} />
+              <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, "Montant payé"]} />
+              <Bar dataKey="paid" fill="hsl(142, 71%, 45%)" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <p className="text-sm text-muted-foreground text-center py-10">
+            Aucun paiement enregistré pour le moment.
+          </p>
+        )}
       </Card>
 
       {/* Strategy / action reminder */}
@@ -345,25 +378,21 @@ const Dashboard = () => {
 
           <div className="space-y-4">
             <div className="rounded-xl bg-muted/20 p-4">
-              <p className="text-xs text-muted-foreground mb-1">
-                Stratégie active
-              </p>
+              <p className="text-xs text-muted-foreground mb-1">Stratégie active</p>
               <p className="font-display text-lg font-bold text-card-foreground">
-                Avalanche
+                {localStorage.getItem("strategy") === "1" ? "Snowball" : "Avalanche"}
               </p>
             </div>
 
-            <div className="rounded-xl bg-muted/20 p-4">
-              <p className="text-xs text-muted-foreground mb-1">
-                Priorité actuelle
-              </p>
-              <p className="font-medium text-card-foreground">
-                {highestRateDebt.creditor}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {highestRateDebt.interestRate}% d’intérêt
-              </p>
-            </div>
+            {highestRateDebt && (
+              <div className="rounded-xl bg-muted/20 p-4">
+                <p className="text-xs text-muted-foreground mb-1">Priorité actuelle</p>
+                <p className="font-medium text-card-foreground">{highestRateDebt.creditor}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {highestRateDebt.interestRate}% d’intérêt
+                </p>
+              </div>
+            )}
 
             <div className="rounded-xl bg-primary/5 border border-primary/10 p-4">
               <p className="text-sm text-muted-foreground">
@@ -389,36 +418,35 @@ const Dashboard = () => {
             </Badge>
           </div>
 
-          <div className="space-y-5">
-            {mockDebts.map((debt) => {
-              const pct = Math.round(
-                ((debt.originalAmount - debt.remainingAmount) / debt.originalAmount) *
-                  100
-              );
-
-              return (
-                <div key={debt.id} className="space-y-2">
-                  <div className="flex items-center justify-between gap-4 text-sm">
-                    <div>
-                      <span className="font-medium text-card-foreground">
-                        {debt.creditor}
+          {activeDebts.length > 0 ? (
+            <div className="space-y-5">
+              {activeDebts.map((debt) => {
+                const pct = debt.originalAmount > 0
+                  ? Math.round(((debt.originalAmount - debt.remainingAmount) / debt.originalAmount) * 100)
+                  : 0;
+                return (
+                  <div key={debt.id} className="space-y-2">
+                    <div className="flex items-center justify-between gap-4 text-sm">
+                      <div>
+                        <span className="font-medium text-card-foreground">{debt.creditor}</span>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Taux : {debt.interestRate}%
+                        </p>
+                      </div>
+                      <span className="text-muted-foreground text-right">
+                        ${debt.remainingAmount.toLocaleString()} restants • {pct}%
                       </span>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        Taux : {debt.interestRate}% • Minimum : $
-                        {debt.minPayment.toLocaleString()}
-                      </p>
                     </div>
-
-                    <span className="text-muted-foreground text-right">
-                      ${debt.remainingAmount.toLocaleString()} restants • {pct}%
-                    </span>
+                    <Progress value={pct} className="h-2.5" />
                   </div>
-
-                  <Progress value={pct} className="h-2.5" />
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center py-10">
+              Aucune dette active. Ajoutez vos dettes pour commencer le suivi.
+            </p>
+          )}
         </Card>
       </div>
 

@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { mockChallenges, type Challenge } from "@/lib/mockData";
+import { useMemo, useState, useEffect } from "react";
+import { getChallenges, createChallenge, type ChallengeDto } from "@/apis/ChallengeApi";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -29,56 +29,37 @@ import {
 import { toast } from "sonner";
 
 const Challenges = () => {
-  const [challenges, setChallenges] = useState(mockChallenges);
+  const [challenges, setChallenges] = useState<ChallengeDto[]>([]);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ name: "", goal: "", endDate: "" });
+  const [creating, setCreating] = useState(false);
+
+  useEffect(() => {
+    getChallenges().then(setChallenges);
+  }, []);
 
   const stats = useMemo(() => {
-    const activeChallenges = challenges.length;
-    const totalRepaid = challenges.reduce((sum, c) => sum + c.currentAmount, 0);
-    const totalMembers = challenges.reduce((sum, c) => sum + c.members.length, 0);
-
-    const bestRank = challenges.reduce((best, challenge) => {
-      const sorted = [...challenge.members].sort(
-        (a, b) => b.contributed - a.contributed
-      );
-      const myIndex = sorted.findIndex((m) => m.name.toLowerCase() === "you");
-      if (myIndex === -1) return best;
-      const rank = myIndex + 1;
-      return best === null ? rank : Math.min(best, rank);
-    }, null as number | null);
-
-    return {
-      activeChallenges,
-      totalRepaid,
-      totalMembers,
-      bestRank,
-    };
+    const activeChallenges = challenges.filter((c) => c.status === 0).length;
+    const totalRepaid = challenges.reduce((sum, c) => sum + c.totalPaid, 0);
+    const totalMembers = challenges.reduce((sum, c) => sum + c.participantCount, 0);
+    return { activeChallenges, totalRepaid, totalMembers, bestRank: null as number | null };
   }, [challenges]);
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!form.name || !form.goal) return;
-
-    const newChallenge: Challenge = {
-      id: Date.now().toString(),
-      name: form.name,
-      goal: +form.goal,
-      currentAmount: 0,
-      startDate: new Date().toISOString().split("T")[0],
-      endDate: form.endDate || "2025-12-31",
-      members: [
-        {
-          id: "1",
-          name: "You",
-          avatar: "Y",
-          contributed: 0,
-          streak: 0,
-        },
-      ],
-    };
-
-    setChallenges([newChallenge, ...challenges]);
-    toast.success("challenge créé ! Tu peux maintenant inviter des participants.");
+    setCreating(true);
+    const result = await createChallenge({
+      title: form.name,
+      targetAmount: +form.goal,
+      dueDate: form.endDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+    });
+    if (result) {
+      setChallenges((prev) => [result, ...prev]);
+      toast.success("Challenge créé ! Tu peux maintenant inviter des participants.");
+    } else {
+      toast.error("Erreur lors de la création du challenge.");
+    }
+    setCreating(false);
     setOpen(false);
     setForm({ name: "", goal: "", endDate: "" });
   };
@@ -160,8 +141,9 @@ const Challenges = () => {
               <Button
                 className="w-full gradient-primary border-0 rounded-xl"
                 onClick={handleCreate}
+                disabled={creating}
               >
-                Créer le challenge
+                {creating ? "Création…" : "Créer le challenge"}
               </Button>
             </div>
           </DialogContent>
@@ -214,24 +196,19 @@ const Challenges = () => {
       </div>
 
       {/* Challenge cards */}
+      {challenges.length === 0 && (
+        <Card className="p-10 rounded-2xl border bg-card/80 text-center">
+          <p className="text-muted-foreground">
+            Aucun challenge pour le moment. Crée le premier !
+          </p>
+        </Card>
+      )}
+
       <div className="space-y-6">
         {challenges.map((challenge) => {
-          const pct = Math.round((challenge.currentAmount / challenge.goal) * 100);
-          const sorted = [...challenge.members].sort(
-            (a, b) => b.contributed - a.contributed
-          );
-          const myIndex = sorted.findIndex(
-            (m) => m.name.toLowerCase() === "you"
-          );
-          const myRank = myIndex >= 0 ? myIndex + 1 : null;
-          const myContribution =
-            sorted.find((m) => m.name.toLowerCase() === "you")?.contributed ?? 0;
-
-          const remainingAmount = Math.max(
-            0,
-            challenge.goal - challenge.currentAmount
-          );
-          const daysRemaining = getDaysRemaining(challenge.endDate);
+          const pct = Math.round(challenge.progressPercent ?? 0);
+          const remainingAmount = Math.max(0, challenge.targetAmount - challenge.totalPaid);
+          const daysRemaining = getDaysRemaining(challenge.dueDate);
           const status = getStatus(pct, daysRemaining);
 
           return (
@@ -245,7 +222,7 @@ const Challenges = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <Trophy className="h-5 w-5 text-warning" />
                     <h3 className="font-display text-xl font-semibold text-card-foreground">
-                      {challenge.name}
+                      {challenge.title}
                     </h3>
                     <Badge variant="outline" className="rounded-full">
                       {status}
@@ -255,42 +232,34 @@ const Challenges = () => {
                   <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Users className="h-3.5 w-3.5" />
-                      {challenge.members.length} membres
+                      {challenge.participantCount} participant(s)
                     </span>
                     <span className="flex items-center gap-1">
                       <Target className="h-3.5 w-3.5" />
-                      Objectif ${challenge.goal.toLocaleString()}
+                      Objectif ${challenge.targetAmount.toLocaleString()}
                     </span>
                     <span className="flex items-center gap-1">
                       <CalendarDays className="h-3.5 w-3.5" />
-                      {challenge.startDate} → {challenge.endDate}
+                      Fin : {new Date(challenge.dueDate).toLocaleDateString("fr-FR")}
                     </span>
                   </div>
+                  {challenge.description && (
+                    <p className="text-sm text-muted-foreground mt-2">{challenge.description}</p>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-auto">
                   <div className="rounded-xl bg-muted/40 px-4 py-3 min-w-[145px]">
-                    <p className="text-xs text-muted-foreground mb-1">
-                      Reste à atteindre
-                    </p>
+                    <p className="text-xs text-muted-foreground mb-1">Reste à atteindre</p>
                     <p className="font-display font-bold text-card-foreground">
                       ${remainingAmount.toLocaleString()}
                     </p>
                   </div>
 
                   <div className="rounded-xl bg-muted/40 px-4 py-3 min-w-[145px]">
-                    <p className="text-xs text-muted-foreground mb-1">
-                      Temps restant
-                    </p>
+                    <p className="text-xs text-muted-foreground mb-1">Temps restant</p>
                     <p className="font-display font-bold text-card-foreground">
                       {daysRemaining >= 0 ? `${daysRemaining} jours` : "Terminé"}
-                    </p>
-                  </div>
-
-                  <div className="rounded-xl bg-primary/5 px-4 py-3 min-w-[145px]">
-                    <p className="text-xs text-muted-foreground mb-1">Ton rang</p>
-                    <p className="font-display font-bold text-primary">
-                      {myRank ? `#${myRank}` : "—"}
                     </p>
                   </div>
                 </div>
@@ -300,91 +269,27 @@ const Challenges = () => {
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">
-                    ${challenge.currentAmount.toLocaleString()} sur $
-                    {challenge.goal.toLocaleString()}
+                    ${challenge.totalPaid.toLocaleString()} sur ${challenge.targetAmount.toLocaleString()}
                   </span>
-                  <span className="font-semibold text-card-foreground">
-                    {pct}%
-                  </span>
+                  <span className="font-semibold text-card-foreground">{pct}%</span>
                 </div>
                 <Progress value={pct} className="h-3" />
               </div>
 
-              {/* Personal summary */}
-              <div className="grid md:grid-cols-3 gap-4 mb-6">
+              {/* Summary */}
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <div className="rounded-xl bg-muted/30 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Ta contribution
-                  </p>
+                  <p className="text-xs text-muted-foreground mb-1">Montant remboursé</p>
                   <p className="text-lg font-display font-bold text-card-foreground">
-                    ${myContribution.toLocaleString()}
+                    ${challenge.totalPaid.toLocaleString()}
                   </p>
                 </div>
-
                 <div className="rounded-xl bg-muted/30 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Progression collective
-                  </p>
+                  <p className="text-xs text-muted-foreground mb-1">Participants</p>
                   <p className="text-lg font-display font-bold text-card-foreground">
-                    {pct}% atteint
+                    {challenge.participantCount}
                   </p>
                 </div>
-
-                <div className="rounded-xl bg-muted/30 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Dynamique du groupe
-                  </p>
-                  <p className="text-lg font-display font-bold text-card-foreground">
-                    {challenge.members.length} participants
-                  </p>
-                </div>
-              </div>
-
-              {/* Leaderboard */}
-              <h4 className="font-display font-semibold text-sm text-card-foreground mb-3 flex items-center gap-2">
-                <Medal className="h-4 w-4 text-primary" />
-                Leaderboard
-              </h4>
-
-              <div className="space-y-3">
-                {sorted.map((member, i) => (
-                  <div
-                    key={member.id}
-                    className="flex items-center gap-3 rounded-xl bg-muted/20 px-3 py-3"
-                  >
-                    <span
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
-                        i === 0
-                          ? "gradient-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {i + 1}
-                    </span>
-
-                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold text-primary">
-                      {member.avatar}
-                    </div>
-
-                    <div className="flex flex-col">
-                      <span className="font-medium text-card-foreground text-sm">
-                        {member.name}
-                      </span>
-                      {member.name.toLowerCase() === "you" && (
-                        <span className="text-xs text-primary">Toi</span>
-                      )}
-                    </div>
-
-                    <span className="flex items-center gap-1 text-xs text-warning ml-2">
-                      <Flame className="h-3 w-3" />
-                      {member.streak}j
-                    </span>
-
-                    <span className="ml-auto font-semibold text-sm text-card-foreground">
-                      ${member.contributed.toLocaleString()}
-                    </span>
-                  </div>
-                ))}
               </div>
 
               {/* Actions */}
@@ -393,17 +298,14 @@ const Challenges = () => {
                   Voir le challenge
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
-
                 <Button variant="outline" className="rounded-xl">
                   <Users className="h-4 w-4 mr-2" />
-                  Inviter
+                  Rejoindre
                 </Button>
-
                 <Button variant="outline" className="rounded-xl">
                   <Wallet className="h-4 w-4 mr-2" />
                   Ajouter un paiement
                 </Button>
-
                 <Button variant="ghost" className="rounded-xl">
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Voir le chat

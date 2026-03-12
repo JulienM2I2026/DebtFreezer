@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuthentificationService.Models
 {
@@ -10,7 +10,7 @@ namespace AuthentificationService.Models
         [Required, EmailAddress, StringLength(320)]
         public string Email { get; set; } = string.Empty;
 
-        
+
         [Required, StringLength(120)]
         public string FullName { get; set; } = string.Empty;
 
@@ -42,7 +42,7 @@ namespace AuthentificationService.Models
             Email = email;
             FullName = fullName;
             //TotalDebt = totalDebt;
-            PasswordHash = passwordHash;    
+            PasswordHash = passwordHash;
         }
-    } 
+    }
 }

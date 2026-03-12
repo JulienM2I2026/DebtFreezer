@@ -1,4 +1,4 @@
-﻿using AuthentificationService.Data;
+using AuthentificationService.Data;
 using AuthentificationService.Dtos;
 using AuthentificationService.Models;
 using AuthentificationService.Services;
@@ -61,18 +61,13 @@ namespace AuthentificationService.Controllers
             return Ok(me);
         }
 
-        // POST /api/auth/forgot-password
-        // Génère un token de réinitialisation (valable 1h).
-        // En production, ce token serait envoyé par email.
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        public async Task<ActionResult<ForgotPasswordResultDto>> ForgotPassword([FromBody] ForgotPasswordDto dto)
         {
-            var token = await _userService.ForgotPasswordAsync(dto);
-            return Ok(new { message = token });
+            var result = await _userService.ForgotPasswordAsync(dto);
+            return Ok(result);
         }
 
-        // POST /api/auth/reset-password
-        // Réinitialise le mot de passe à partir du token reçu.
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {

@@ -1,4 +1,4 @@
-﻿using AuthentificationService.Data;
+using AuthentificationService.Data;
 using AuthentificationService.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +20,7 @@ namespace AuthentificationService.Repository
 
         public async Task<bool> ExistsByEmailAsync(string email)
         {
-            var normalized = email.Trim().ToLowerInvariant(); //variable qui contient une version “standardisée” de l'email
+            var normalized = email.Trim().ToLowerInvariant();
             return await _db.users.AnyAsync(u => u.Email.ToLower() == normalized);
         }
 

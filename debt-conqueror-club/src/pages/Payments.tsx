@@ -12,7 +12,6 @@ import { Plus, Receipt, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { getDebts } from "@/apis/DebtApi";
 import { createDebt, getPayments } from "@/apis/PaymentApi";
-import { log } from "console";
 
 const Payments = () => {
   const [payments, setPayments] = useState([]);

@@ -1,5 +1,7 @@
-import { useState, useMemo } from "react";
-import { mockDebts } from "@/lib/mockData";
+import { useState, useMemo, useEffect } from "react";
+import { getDebts } from "@/apis/DebtApi";
+import { calculateStrategy } from "@/apis/StrategyApi";
+import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -28,10 +30,17 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+type DebtForSimulation = {
+  id: number | string;
+  creditor: string;
+  remainingAmount: number;
+  interestRate: number;
+};
+
 function simulatePayoff(
-  debts: typeof mockDebts,
+  debts: DebtForSimulation[],
   strategy: "avalanche" | "snowball",
-  extraPayment: number
+  monthlyBudget: number
 ) {
   let remaining = debts.map((d) => ({ ...d, balance: d.remainingAmount }));
   let months = 0;
@@ -40,14 +49,9 @@ function simulatePayoff(
 
   while (remaining.some((d) => d.balance > 0) && months < 360) {
     months++;
-    let extra = extraPayment;
+    let budget = monthlyBudget;
 
-    const sorted = [...remaining].sort((a, b) =>
-      strategy === "avalanche"
-        ? b.interestRate - a.interestRate
-        : a.balance - b.balance
-    );
-
+    // Appliquer les intérêts mensuels
     for (const d of remaining) {
       if (d.balance > 0) {
         const interest = (d.balance * d.interestRate) / 100 / 12;
@@ -56,28 +60,27 @@ function simulatePayoff(
       }
     }
 
-    for (const d of remaining) {
-      if (d.balance > 0) {
-        const payment = Math.min(d.minPayment, d.balance);
-        d.balance -= payment;
-      }
-    }
+    // Trier selon la stratégie
+    const sorted = [...remaining].sort((a, b) =>
+      strategy === "avalanche"
+        ? b.interestRate - a.interestRate
+        : a.balance - b.balance
+    );
 
+    // Appliquer le budget mensuel dans l'ordre de priorité
     for (const s of sorted) {
       const d = remaining.find((r) => r.id === s.id)!;
-      if (d.balance > 0 && extra > 0) {
-        const payment = Math.min(extra, d.balance);
+      if (d.balance > 0 && budget > 0) {
+        const payment = Math.min(budget, d.balance);
         d.balance -= payment;
-        extra -= payment;
+        budget -= payment;
       }
     }
 
     if (months % 3 === 0 || !remaining.some((d) => d.balance > 0)) {
       timeline.push({
         month: months,
-        total: Math.round(
-          remaining.reduce((sum, d) => sum + Math.max(0, d.balance), 0)
-        ),
+        total: Math.round(remaining.reduce((sum, d) => sum + Math.max(0, d.balance), 0)),
       });
     }
   }
@@ -92,20 +95,64 @@ function simulatePayoff(
 
 const Strategy = () => {
   const [extraPayment, setExtraPayment] = useState(200);
+  const [debts, setDebts] = useState<DebtForSimulation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    getDebts().then((data) => {
+      const active = (data ?? []).filter((d: any) => d.status === 0);
+      setDebts(active.map((d: any) => ({
+        id: d.id,
+        creditor: d.creditor,
+        remainingAmount: d.remainingAmount,
+        interestRate: d.interestRate,
+      })));
+      setLoading(false);
+    });
+  }, []);
 
   const avalanche = useMemo(
-    () => simulatePayoff(mockDebts, "avalanche", extraPayment),
-    [extraPayment]
+    () => simulatePayoff(debts, "avalanche", extraPayment),
+    [debts, extraPayment]
   );
 
   const snowball = useMemo(
-    () => simulatePayoff(mockDebts, "snowball", extraPayment),
-    [extraPayment]
+    () => simulatePayoff(debts, "snowball", extraPayment),
+    [debts, extraPayment]
   );
 
   const savings = snowball.totalInterest - avalanche.totalInterest;
-  const totalDebt = mockDebts.reduce((sum, d) => sum + d.remainingAmount, 0);
-  const minPayments = mockDebts.reduce((sum, d) => sum + d.minPayment, 0);
+  const totalDebt = debts.reduce((sum, d) => sum + d.remainingAmount, 0);
+
+  const handleChoose = async (strategyType: 1 | 2) => {
+    setSaving(true);
+    const result = await calculateStrategy({ monthlyBudget: extraPayment, strategyType });
+    if (result) {
+      localStorage.setItem("strategy", String(strategyType));
+      toast.success(`Stratégie ${strategyType === 1 ? "Snowball" : "Avalanche"} enregistrée !`);
+    } else {
+      toast.error("Erreur lors de l'enregistrement de la stratégie.");
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-muted-foreground">Chargement des dettes…</p>
+      </div>
+    );
+  }
+
+  if (debts.length === 0) {
+    return (
+      <div className="space-y-4 max-w-6xl mx-auto animate-fade-in pb-8">
+        <h1 className="font-display text-3xl font-bold text-foreground">Simulateur de remboursement</h1>
+        <p className="text-muted-foreground">Aucune dette active. Ajoutez des dettes pour utiliser le simulateur.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto animate-fade-in pb-8">
@@ -160,9 +207,9 @@ const Strategy = () => {
               <Gauge className="h-5 w-5 text-info" />
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mb-1">Mensualités minimales</p>
+          <p className="text-sm text-muted-foreground mb-1">Dettes simulées</p>
           <p className="text-2xl font-display font-bold text-card-foreground">
-            ${minPayments.toLocaleString()}
+            {debts.length}
           </p>
         </Card>
 
@@ -291,8 +338,12 @@ const Strategy = () => {
             ))}
           </div>
 
-          <Button className="w-full mt-5 rounded-xl gradient-primary border-0 mt-auto">
-            Choisir Avalanche
+          <Button
+            className="w-full mt-5 rounded-xl gradient-primary border-0 mt-auto"
+            onClick={() => handleChoose(2)}
+            disabled={saving}
+          >
+            {saving ? "Enregistrement…" : "Choisir Avalanche"}
           </Button>
         </Card>
 
@@ -362,8 +413,13 @@ const Strategy = () => {
             ))}
           </div>
 
-          <Button variant="outline" className="w-full mt-5 rounded-xl mt-auto">
-            Choisir Snowball
+          <Button
+            variant="outline"
+            className="w-full mt-5 rounded-xl mt-auto"
+            onClick={() => handleChoose(1)}
+            disabled={saving}
+          >
+            {saving ? "Enregistrement…" : "Choisir Snowball"}
           </Button>
         </Card>
       </div>

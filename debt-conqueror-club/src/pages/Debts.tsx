@@ -81,12 +81,11 @@ const Debts = () => {
   }, [])
 
   const handleChange = (type, value) => {
-    if(["originalAmount", "interestRate"].includes(type))
-    {
-      value = value.replace(/[^0-9]/g, '')
+    if (["originalAmount", "interestRate"].includes(type)) {
+      value = value.replace(/[^0-9]/g, "");
     }
-    setEditingDebt({ ...editingDebt, originalAmount: value })
-  }
+    setEditingDebt({ ...editingDebt, [type]: value });
+  };
 
 
 
@@ -170,7 +169,7 @@ const Debts = () => {
 
       {/* Cards view */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {debts?.length > 1 && debts?.reverse()?.map((debt) => {
+        {debts?.length > 0 && debts?.reverse()?.map((debt) => {
           const pct = Math.round(((debt.originalAmount - debt.remainingAmount) / debt.originalAmount) * 100);
           const Icon = typeIcons[typeKeyMap[debt.type]];
           return (
@@ -224,7 +223,7 @@ const Debts = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {debts?.length > 1 && debts.map((debt) => {
+            {debts?.length > 0 && debts.map((debt) => {
                 const dueDate = new Date(debt.dueDate).toLocaleDateString();
                 return(
                 <TableRow key={debt.id}>

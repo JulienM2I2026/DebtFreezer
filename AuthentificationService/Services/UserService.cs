@@ -88,26 +88,26 @@ namespace DebtService.Services
             };
         }
 
-        public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
+        public async Task<ForgotPasswordResultDto> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
-            var email = dto.Email.Trim().ToLowerInvariant();
-            var user = await _users.GetByEmailAsync(email);
+            var user = await _users.GetByEmailAsync(dto.Email.Trim().ToLowerInvariant());
 
             // On ne révèle pas si l'email existe ou non (sécurité)
             if (user is null)
-                return "Si cet email existe, un token de réinitialisation a été généré.";
+                return new ForgotPasswordResultDto { Message = "Si cet email existe, un lien de réinitialisation a été envoyé." };
 
             // Génère un token unique et le stocke avec une expiration de 1h
             var token = Guid.NewGuid().ToString("N");
             user.PasswordResetToken = token;
             user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
-
-            await _users.UpdateAsync(user);
             await _users.SaveChangesAsync();
 
-            // Dans un vrai système, ce token serait envoyé par email.
-            // Ici on le retourne directement pour les tests.
-            return token;
+            return new ForgotPasswordResultDto
+            {
+                Message = "Token de réinitialisation généré.",
+                ResetToken = token,
+                ExpiresAtUtc = user.PasswordResetTokenExpiry.Value
+            };
         }
 
         public async Task ResetPasswordAsync(ResetPasswordDto dto)
@@ -121,8 +121,6 @@ namespace DebtService.Services
             user.PasswordHash = _hasher.Hash(dto.NewPassword);
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpiry = null;
-
-            await _users.UpdateAsync(user);
             await _users.SaveChangesAsync();
         }
     }
