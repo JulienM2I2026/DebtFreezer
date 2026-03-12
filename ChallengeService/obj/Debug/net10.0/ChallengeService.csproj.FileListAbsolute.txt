@@ -28,8 +28,8 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Challen
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\ChallengeService\obj\Debug\net10.0\ChallengeService.genruntimeconfig.cache
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\ChallengeService\obj\Debug\net10.0\ref\ChallengeService.dll
 C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\appsettings.Development.json
-C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\ChallengeService.staticwebassets.endpoints.json
 C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\appsettings.json
+C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\ChallengeService.staticwebassets.endpoints.json
 C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\ChallengeService.exe
 C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\ChallengeService.deps.json
 C:\Users\Administrateur\Documents\OneDrive\Formation M2i\Projet\Projet Final\Backend\DebtFreezer\ChallengeService\bin\Debug\net10.0\ChallengeService.runtimeconfig.json
