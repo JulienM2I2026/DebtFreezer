@@ -26,5 +26,11 @@ namespace Gateway.Controllers
             return Ok(result);
         }
 
+        [HttpPost("register")]
+        public async Task<ActionResult<AuthDto>> Register([FromBody] RegisterDto registerDto)
+        {
+            var result = await clientRegister.PostRequest("register", registerDto);
+            return Ok(result);
+        }
     }
 }
