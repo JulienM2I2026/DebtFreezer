@@ -11,8 +11,7 @@ namespace StrategyService.Dtos
     public class CalculateStrategyDto
     {
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "UserId must be a valid positive integer.")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Monthly budget must be greater than 0.")]

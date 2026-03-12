@@ -27,6 +27,12 @@ namespace AuthentificationService.Models
         // Stratégie choisie
         public StrategyType RepaymentStrategy { get; set; } = StrategyType.Snowball;
 
+        // Token de réinitialisation de mot de passe (null si aucune demande en cours)
+        public string? PasswordResetToken { get; set; }
+
+        // Date d'expiration du token (1h après génération)
+        public DateTime? PasswordResetTokenExpiry { get; set; }
+
         // Constructeur vide (utile pour EF + object initializer)
         public User() { }
 

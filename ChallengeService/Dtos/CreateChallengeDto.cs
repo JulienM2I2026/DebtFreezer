@@ -19,7 +19,6 @@ namespace ChallengeService.Dtos
         public DateTime DueDate { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "CreatorUserId must be a valid positive integer.")]
-        public int CreatorUserId { get; set; }
+        public Guid CreatorUserId { get; set; }
     }
 }

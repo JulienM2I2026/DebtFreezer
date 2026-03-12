@@ -7,10 +7,10 @@ namespace ChallengeService.Dtos.External
     public class ExternalDebtDto
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Creditor { get; set; } = string.Empty;
         public double OriginalAmount { get; set; }
         public double InterestRate { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public int Status { get; set; }
     }
 }

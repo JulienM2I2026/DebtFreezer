@@ -22,8 +22,7 @@ namespace ChallengeService.Models
         public DateTime DueDate { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue)]
-        public int CreatorUserId { get; set; }
+        public Guid CreatorUserId { get; set; }
 
         public ChallengeStatus Status { get; set; } = ChallengeStatus.ACTIVE;
 

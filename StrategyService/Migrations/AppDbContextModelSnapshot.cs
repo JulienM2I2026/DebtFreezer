@@ -52,8 +52,8 @@ namespace StrategyService.Migrations
                     b.Property<int>("TotalMonths")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

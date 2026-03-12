@@ -61,6 +61,32 @@ namespace AuthentificationService.Controllers
             return Ok(me);
         }
 
+        // POST /api/auth/forgot-password
+        // Génère un token de réinitialisation (valable 1h).
+        // En production, ce token serait envoyé par email.
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        {
+            var token = await _userService.ForgotPasswordAsync(dto);
+            return Ok(new { message = token });
+        }
+
+        // POST /api/auth/reset-password
+        // Réinitialise le mot de passe à partir du token reçu.
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+            try
+            {
+                await _userService.ResetPasswordAsync(dto);
+                return Ok(new { message = "Mot de passe réinitialisé avec succès." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("/ping")]
         [Authorize]
         public IActionResult Ping()

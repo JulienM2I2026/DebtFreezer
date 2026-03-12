@@ -126,11 +126,10 @@ namespace ChallengeService.Services
         //
         // Chaîne de validation :
         //   1. Vérifier que l'user a rejoint le défi
-        //   2. Récupérer le paiement depuis PaymentService via PaymentId
-        //   3. Récupérer la dette depuis DebtService via payment.DebtId
-        //   4. Vérifier que debt.UserId == dto.UserId (ownership)
-        //   5. Anti double-comptage : vérifier que ce PaymentId n'est pas déjà utilisé
-        //   6. Enregistrer le ChallengePayment et mettre à jour AmountPaid
+        //   2. Récupérer le paiement depuis PaymentService (inclut la Debt imbriquée)
+        //   3. Vérifier que payment.Debt.UserId == dto.UserId (ownership)
+        //   4. Anti double-comptage : vérifier que ce PaymentId n'est pas déjà utilisé
+        //   5. Enregistrer le ChallengePayment et mettre à jour AmountPaid
         // ----------------------------------------------------------------
         public async Task<UserChallengeDto> RecordPaymentAsync(int challengeId, RecordChallengePaymentDto dto)
         {
@@ -147,22 +146,17 @@ namespace ChallengeService.Services
             var participation = participations.FirstOrDefault()
                 ?? throw new InvalidOperationException($"User {dto.UserId} has not joined challenge {challengeId}.");
 
-            // 2. Récupérer le paiement depuis PaymentService
+            // 2. Récupérer le paiement depuis PaymentService (inclut la dette imbriquée)
             var payment = await _serviceClient.GetAsync<ExternalPaymentDto>(
-                "PaymentService", $"/api/v1/payments/{dto.PaymentId}")
+                "PaymentService", $"/api/Payment/{dto.PaymentId}")
                 ?? throw new KeyNotFoundException($"Payment {dto.PaymentId} not found in PaymentService.");
 
-            // 3. Récupérer la dette depuis DebtService pour vérifier la propriété
-            var debt = await _serviceClient.GetAsync<ExternalDebtDto>(
-                "DebtService", $"/api/Debt/{payment.DebtId}")
-                ?? throw new KeyNotFoundException($"Debt {payment.DebtId} not found in DebtService.");
-
-            // 4. Valider que la dette appartient bien à cet utilisateur
-            if (debt.UserId != dto.UserId)
+            // 3. Valider que la dette appartient bien à cet utilisateur (via le Debt imbriqué dans PaymentDto)
+            if (payment.Debt == null || payment.Debt.UserId != dto.UserId)
                 throw new UnauthorizedAccessException(
                     $"Payment {dto.PaymentId} does not belong to user {dto.UserId}.");
 
-            // 5. Anti double-comptage : ce PaymentId ne doit pas déjà exister dans ce défi
+            // 4. Anti double-comptage : ce PaymentId ne doit pas déjà exister dans ce défi
             var alreadyUsed = await _challengePaymentRepository.FindAsync(
                 cp => cp.ChallengeId == challengeId && cp.PaymentId == dto.PaymentId);
 
@@ -170,25 +164,25 @@ namespace ChallengeService.Services
                 throw new InvalidOperationException(
                     $"Payment {dto.PaymentId} has already been recorded in challenge {challengeId}.");
 
-            // 6. Enregistrer le ChallengePayment (traçabilité + anti double-comptage)
+            // 5. Enregistrer le ChallengePayment (traçabilité + anti double-comptage)
             var challengePayment = new ChallengePayment
             {
                 ChallengeId = challengeId,
                 UserId = dto.UserId,
                 PaymentId = dto.PaymentId,
-                Amount = payment.Amount,
+                Amount = (double)payment.Amount,
                 RecordedAt = DateTime.UtcNow
             };
 
             await _challengePaymentRepository.AddAsync(challengePayment);
             await _challengePaymentRepository.SaveChangesAsync();
 
-            // 7. Mettre à jour le total de l'utilisateur dans ce défi
-            participation.AmountPaid += payment.Amount;
+            // 6. Mettre à jour le total de l'utilisateur dans ce défi
+            participation.AmountPaid += (double)payment.Amount;
             await _userChallengeRepository.UpdateAsync(participation);
             await _userChallengeRepository.SaveChangesAsync();
 
-            // 8. Vérifier si l'objectif collectif est atteint
+            // 7. Vérifier si l'objectif collectif est atteint
             var allParticipations = await _userChallengeRepository.FindAsync(
                 uc => uc.ChallengeId == challengeId);
 
@@ -254,10 +248,9 @@ namespace ChallengeService.Services
         /// Garantit que seuls les utilisateurs ayant des dettes enregistrées
         /// peuvent créer ou rejoindre un défi.
         /// </summary>
-        private async Task ValidateUserHasDebtsAsync(int userId)
+        private async Task ValidateUserHasDebtsAsync(Guid userId)
         {
-            var allDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", "/api/Debt");
-            var userDebts = allDebts.Where(d => d.UserId == userId).ToList();
+            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/Debt?userId={userId}");
 
             if (!userDebts.Any())
                 throw new InvalidOperationException(

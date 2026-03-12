@@ -4,7 +4,7 @@ namespace ChallengeService.Dtos
     {
         public int Id { get; set; }
         public int ChallengeId { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public double AmountPaid { get; set; }
         public DateTime JoinedAt { get; set; }
     }

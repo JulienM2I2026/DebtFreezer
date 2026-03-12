@@ -5,7 +5,7 @@ namespace StrategyService.Dtos
     public class RepaymentPlanDto
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public StrategyType StrategyType { get; set; }
         public double MonthlyBudget { get; set; }
         public int TotalMonths { get; set; }

@@ -35,6 +35,17 @@ namespace AuthentificationService.Repository
             return await _db.users.FirstOrDefaultAsync(u => u.UserId == userId);
         }
 
+        public async Task<User?> GetByResetTokenAsync(string token)
+        {
+            return await _db.users.FirstOrDefaultAsync(u => u.PasswordResetToken == token);
+        }
+
+        public Task UpdateAsync(User user)
+        {
+            _db.users.Update(user);
+            return Task.CompletedTask;
+        }
+
         public async Task SaveChangesAsync()
         {
             await _db.SaveChangesAsync();
