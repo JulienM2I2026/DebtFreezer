@@ -8,3 +8,7 @@ obj/
 *.opendb
 TestResults/
 Migrations/
+
+# Configuration locale (ne pas versionner)
+appsettings.json
+appsettings.*.json
