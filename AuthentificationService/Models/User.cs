@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuthentificationService.Models
 {
@@ -10,7 +10,7 @@ namespace AuthentificationService.Models
         [Required, EmailAddress, StringLength(320)]
         public string Email { get; set; } = string.Empty;
 
-        
+
         [Required, StringLength(120)]
         public string FullName { get; set; } = string.Empty;
 
@@ -27,6 +27,12 @@ namespace AuthentificationService.Models
         // Stratégie choisie
         public StrategyType RepaymentStrategy { get; set; } = StrategyType.Snowball;
 
+        // Token de réinitialisation de mot de passe (null si aucune demande en cours)
+        public string? PasswordResetToken { get; set; }
+
+        // Date d'expiration du token (1h après génération)
+        public DateTime? PasswordResetTokenExpiry { get; set; }
+
         // Constructeur vide (utile pour EF + object initializer)
         public User() { }
 
@@ -36,7 +42,7 @@ namespace AuthentificationService.Models
             Email = email;
             FullName = fullName;
             //TotalDebt = totalDebt;
-            PasswordHash = passwordHash;    
+            PasswordHash = passwordHash;
         }
-    } 
+    }
 }

@@ -87,5 +87,41 @@ namespace DebtService.Services
                 RepaymentStrategy = user.RepaymentStrategy
             };
         }
+
+        public async Task<ForgotPasswordResultDto> ForgotPasswordAsync(ForgotPasswordDto dto)
+        {
+            var user = await _users.GetByEmailAsync(dto.Email.Trim().ToLowerInvariant());
+
+            // On ne révèle pas si l'email existe ou non (sécurité)
+            if (user is null)
+                return new ForgotPasswordResultDto { Message = "Si cet email existe, un lien de réinitialisation a été envoyé." };
+
+            // Génère un token unique et le stocke avec une expiration de 1h
+            var token = Guid.NewGuid().ToString("N");
+            user.PasswordResetToken = token;
+            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+            await _users.SaveChangesAsync();
+
+            return new ForgotPasswordResultDto
+            {
+                Message = "Token de réinitialisation généré.",
+                ResetToken = token,
+                ExpiresAtUtc = user.PasswordResetTokenExpiry.Value
+            };
+        }
+
+        public async Task ResetPasswordAsync(ResetPasswordDto dto)
+        {
+            var user = await _users.GetByResetTokenAsync(dto.Token);
+
+            if (user is null || user.PasswordResetTokenExpiry is null || user.PasswordResetTokenExpiry < DateTime.UtcNow)
+                throw new InvalidOperationException("Token invalide ou expiré.");
+
+            // Met à jour le mot de passe et invalide le token
+            user.PasswordHash = _hasher.Hash(dto.NewPassword);
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpiry = null;
+            await _users.SaveChangesAsync();
+        }
     }
 }

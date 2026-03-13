@@ -33,8 +33,8 @@ namespace ChallengeService.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("CreatorUserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreatorUserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
@@ -81,8 +81,8 @@ namespace ChallengeService.Migrations
                     b.Property<DateTime>("RecordedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -111,8 +111,8 @@ namespace ChallengeService.Migrations
                     b.Property<DateTime>("JoinedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 

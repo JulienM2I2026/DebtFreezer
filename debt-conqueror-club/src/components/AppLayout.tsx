@@ -79,7 +79,7 @@ const AppLayout = () => {
             <div className="flex-1" />
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-sm font-semibold text-primary-foreground">
-                J
+                {(localStorage.getItem("fullName") ?? "?")[0].toUpperCase()}
               </div>
             </div>
           </header>

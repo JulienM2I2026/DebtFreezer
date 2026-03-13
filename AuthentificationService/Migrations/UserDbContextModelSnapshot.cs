@@ -46,6 +46,12 @@ namespace AuthentificationService.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("RepaymentStrategy")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")

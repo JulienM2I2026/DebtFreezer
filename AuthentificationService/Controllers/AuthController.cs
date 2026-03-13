@@ -1,4 +1,4 @@
-﻿using AuthentificationService.Data;
+using AuthentificationService.Data;
 using AuthentificationService.Dtos;
 using AuthentificationService.Models;
 using AuthentificationService.Services;
@@ -59,6 +59,27 @@ namespace AuthentificationService.Controllers
             if (me is null) return NotFound();
 
             return Ok(me);
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<ActionResult<ForgotPasswordResultDto>> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        {
+            var result = await _userService.ForgotPasswordAsync(dto);
+            return Ok(result);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+            try
+            {
+                await _userService.ResetPasswordAsync(dto);
+                return Ok(new { message = "Mot de passe réinitialisé avec succès." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("/ping")]

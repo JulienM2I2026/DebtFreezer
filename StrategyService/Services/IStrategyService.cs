@@ -6,7 +6,7 @@ namespace StrategyService.Services
     {
         Task<RepaymentPlanDto> CalculateAndSaveAsync(CalculateStrategyDto dto);
         Task<List<RepaymentPlanDto>> GetAllAsync();
-        Task<List<RepaymentPlanDto>> GetByUserIdAsync(int userId);
+        Task<List<RepaymentPlanDto>> GetByUserIdAsync(Guid userId);
         Task<RepaymentPlanDto?> GetByIdAsync(int id);
         Task<bool> DeleteAsync(int id);
     }

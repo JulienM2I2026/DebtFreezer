@@ -25,36 +25,23 @@ namespace StrategyService.Services
         public async Task<RepaymentPlanDto> CalculateAndSaveAsync(CalculateStrategyDto dto)
         {
             // 1. Récupérer les dettes ACTIVES de l'utilisateur depuis DebtService
-            var allDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", "/api/Debt");
-            var userDebts = allDebts
-                .Where(d => d.UserId == dto.UserId && d.Status.Equals("ACTIVE", StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/Debt?userId={dto.UserId}");
+            userDebts = userDebts.Where(d => d.Status == 0).ToList(); // ACTIVE = 0
 
             if (!userDebts.Any())
                 throw new InvalidOperationException($"Aucune dette active trouvée pour l'utilisateur {dto.UserId} dans DebtService.");
 
-            // 2. Calculer le montant restant de chaque dette :
-            //    RemainingAmount = OriginalAmount - Somme(paiements depuis PaymentService)
-            var debtInputs = new List<DebtInputDto>();
-            foreach (var debt in userDebts)
-            {
-                var payments = await _serviceClient.GetListAsync<ExternalPaymentDto>(
-                    "PaymentService", $"/api/v1/payments/by-debt/{debt.Id}");
-
-                double totalPaid = payments.Sum(p => p.Amount);
-                double remaining = Math.Max(0, debt.OriginalAmount - totalPaid);
-
-                // N'inclure que les dettes ayant encore un solde
-                if (remaining > 0.01)
+            // 2. Utiliser le RemainingAmount directement depuis DebtService
+            //    (mis à jour automatiquement à chaque paiement enregistré)
+            var debtInputs = userDebts
+                .Where(d => d.RemainingAmount > 0.01)
+                .Select(d => new DebtInputDto
                 {
-                    debtInputs.Add(new DebtInputDto
-                    {
-                        Creditor = debt.Creditor,
-                        RemainingAmount = remaining,
-                        InterestRate = debt.InterestRate
-                    });
-                }
-            }
+                    Creditor = d.Creditor,
+                    RemainingAmount = d.RemainingAmount,
+                    InterestRate = d.InterestRate
+                })
+                .ToList();
 
             if (!debtInputs.Any())
                 throw new InvalidOperationException($"Toutes les dettes de l'utilisateur {dto.UserId} sont déjà remboursées.");
@@ -87,7 +74,7 @@ namespace StrategyService.Services
             return plans.Select(p => MapToDto(p, DeserializePriority(p.DebtPriorityJson))).ToList();
         }
 
-        public async Task<List<RepaymentPlanDto>> GetByUserIdAsync(int userId)
+        public async Task<List<RepaymentPlanDto>> GetByUserIdAsync(Guid userId)
         {
             var plans = await _repository.FindAsync(p => p.UserId == userId);
             return plans.Select(p => MapToDto(p, DeserializePriority(p.DebtPriorityJson))).ToList();

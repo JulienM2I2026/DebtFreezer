@@ -14,8 +14,7 @@ namespace ChallengeService.Models
         public Challenge? Challenge { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue)]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [Range(0, double.MaxValue)]
         public double AmountPaid { get; set; } = 0;

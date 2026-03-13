@@ -11,7 +11,7 @@ namespace ChallengeService.Dtos
         public double TotalPaid { get; set; }
         public double ProgressPercent { get; set; }
         public DateTime DueDate { get; set; }
-        public int CreatorUserId { get; set; }
+        public Guid CreatorUserId { get; set; }
         public int ParticipantCount { get; set; }
         public ChallengeStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }

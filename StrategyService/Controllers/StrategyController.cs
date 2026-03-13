@@ -50,7 +50,7 @@ namespace StrategyService.Controllers
         // GET /api/strategy/plans/user/{userId}
         // Retourne tous les plans d'un utilisateur
         [HttpGet("plans/user/{userId}")]
-        public async Task<IActionResult> GetByUser(int userId)
+        public async Task<IActionResult> GetByUser(Guid userId)
         {
             var plans = await _strategyService.GetByUserIdAsync(userId);
             return Ok(plans);

@@ -1,23 +1,43 @@
-  export async function getDebts() {
-    const token = localStorage.getItem("token");
-    try {
-        const response = await fetch("http://localhost:5099/api/Debt", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-      });
+const BASE = "http://localhost:5099";
 
-      const data = await response.json(); // lire UNE seule fois
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  };
+}
 
-      if (!response.ok) {
-        console.log("Failed to load Debts", data);
-        return;
-      }
-      
-      return data;
-    } catch (error) {
-      console.log("Failed to load Debts", error);
-    }
+export async function getDebts() {
+  try {
+    const response = await fetch(`${BASE}/api/Debt`, {
+      method: "GET",
+      headers: authHeaders(),
+    });
+    if (!response.ok) return [];
+    return response.json();
+  } catch (error) {
+    console.error("Failed to load Debts", error);
+    return [];
   }
+}
+
+export async function createDebt(payload: {
+  creditor: string;
+  originalAmount: number;
+  interestRate: number;
+  dueDate: string;
+  type: number;
+}) {
+  try {
+    const response = await fetch(`${BASE}/api/Debt`, {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) return null;
+    return response.json();
+  } catch (error) {
+    console.error("Failed to create Debt", error);
+    return null;
+  }
+}

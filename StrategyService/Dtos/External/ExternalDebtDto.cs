@@ -7,12 +7,13 @@ namespace StrategyService.Dtos.External
     public class ExternalDebtDto
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Creditor { get; set; } = string.Empty;
         public double OriginalAmount { get; set; }
+        public double RemainingAmount { get; set; }
         public double InterestRate { get; set; }
         public DateTime DueDate { get; set; }
-        public string Type { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public int Type { get; set; }
+        public int Status { get; set; }
     }
 }

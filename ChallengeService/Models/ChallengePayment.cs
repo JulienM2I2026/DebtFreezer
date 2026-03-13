@@ -18,7 +18,7 @@ namespace ChallengeService.Models
         public Challenge? Challenge { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>ID du paiement dans PaymentService</summary>
         [Required]

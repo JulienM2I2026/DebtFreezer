@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\Debt-Freezer\\Debt-Freezer.csproj",
+      "projectUniqueName": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\Debt-Freezer\\Debt-Freezer.csproj",
       "projectName": "Debt-Freezer",
-      "projectPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\Debt-Freezer\\Debt-Freezer.csproj",
+      "projectPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\Debt-Freezer\\Debt-Freezer.csproj",
       "packagesPath": "C:\\Users\\Administrateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\Debt-Freezer\\Debt-Freezer\\obj\\",
+      "outputPath": "C:\\Users\\Administrateur\\Documents\\OneDrive\\Formation M2i\\Projet\\Projet Final\\Backend\\DebtFreezer\\Debt-Freezer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -51,7 +51,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net10.0": {
@@ -75,7 +75,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

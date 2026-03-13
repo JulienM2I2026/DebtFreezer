@@ -6,9 +6,9 @@ namespace ChallengeService.Dtos.External
     public class ExternalPaymentDto
     {
         public int Id { get; set; }
-        public int DebtId { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string? Notes { get; set; }
+        public ExternalDebtDto? Debt { get; set; }
     }
 }

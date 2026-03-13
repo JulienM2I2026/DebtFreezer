@@ -34,6 +34,15 @@ const Login = () => {
     if (data?.accessToken) {
       localStorage.setItem("token", data.accessToken);
     }
+    if (data?.userId) {
+      localStorage.setItem("userId", data.userId);
+    }
+    if (data?.email) {
+      localStorage.setItem("email", data.email);
+    }
+    if (data?.fullName) {
+      localStorage.setItem("fullName", data.fullName);
+    }
 
     navigate("/dashboard");
     return data;
@@ -141,15 +150,23 @@ const Login = () => {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Nouveau ici ?{" "}
+          <div className="flex flex-col items-center gap-2 mt-6">
+            <p className="text-center text-sm text-muted-foreground">
+              Nouveau ici ?{" "}
+              <Link
+                to="/signup"
+                className="text-primary font-semibold hover:underline"
+              >
+                Ouvre ton espace
+              </Link>
+            </p>
             <Link
-              to="/signup"
-              className="text-primary font-semibold hover:underline"
+              to="/forgot-password"
+              className="text-sm text-muted-foreground hover:text-primary hover:underline"
             >
-              Ouvre ton espace
+              Mot de passe oublié ?
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </div>

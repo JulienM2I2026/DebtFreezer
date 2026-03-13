@@ -9,8 +9,7 @@ namespace ChallengeService.Dtos
     public class RecordChallengePaymentDto
     {
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "UserId must be a valid positive integer.")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>ID du paiement dans PaymentService.</summary>
         [Required]
