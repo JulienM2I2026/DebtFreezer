@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Éléments de solution/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="AuthentificationService/AuthentificationService.csproj" />
   <Project Path="ChallengeService/ChallengeService.csproj" />
   <Project Path="DebtService/DebtService.csproj" />

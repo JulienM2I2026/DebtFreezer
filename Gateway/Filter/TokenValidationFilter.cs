@@ -76,7 +76,7 @@ namespace Gateway.Filter
         {
             try
             {
-                var baseUrl = _config["AuthentificationService:BaseUrl"] ?? throw new InvalidOperationException("AuthService:BaseUrl non configuré.");
+                var baseUrl = _config["ServiceUrls:AuthService"] ?? throw new InvalidOperationException("AuthService:BaseUrl non configuré.");
                 if (token.StartsWith("Bearer "))
                 {
                     token = token.Substring(7);
