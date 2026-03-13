@@ -10,7 +10,7 @@ namespace Gateway.Dtos
     // Ce que le Gateway envoie au StrategyService (avec userId injecté depuis le token)
     public class CalculateStrategyInternalDto
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public double MonthlyBudget { get; set; }
         public int StrategyType { get; set; }
     }

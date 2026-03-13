@@ -16,7 +16,7 @@ namespace Gateway.Dtos
         public string? Description { get; set; }
         public double TargetAmount { get; set; }
         public DateTime DueDate { get; set; }
-        public int CreatorUserId { get; set; }
+        public Guid CreatorUserId { get; set; }
     }
 
     // Réponse du ChallengeService pour un challenge

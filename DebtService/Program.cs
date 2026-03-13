@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 string connectionString = builder.Configuration.GetConnectionString("default");
-builder.Services.AddDbContext<AppDbContext>(option => option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<AppDbContext>(option => option.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 0))));
 
 builder.Services.AddScoped<IRepository<Debt>, Repository>();
 builder.Services.AddScoped<IService<DebtSend, DebtReceive>, Service>();
@@ -40,6 +40,11 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();  // ← applique toutes les migrations EF Core automatiquement
+    var retries = 10;
+    while (retries-- > 0)
+    {
+        try { db.Database.Migrate(); break; }
+        catch { if (retries == 0) throw; Thread.Sleep(3000); }
+    }
 }
 app.Run();

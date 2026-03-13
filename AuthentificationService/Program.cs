@@ -32,7 +32,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
              ?? throw new InvalidOperationException("ConnectionStrings:DefaultConnection missing");
 
     // Auto-detect la version du serveur MySQL/MariaDB
-    options.UseMySql(cs, ServerVersion.AutoDetect(cs));
+    options.UseMySql(cs, new MySqlServerVersion(new Version(8, 0, 0)));
 });
 
 // -------------------------
@@ -119,7 +119,12 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<UserDbContext>();
-    db.Database.Migrate();  // ← applique toutes les migrations EF Core automatiquement
+    var retries = 10;
+    while (retries-- > 0)
+    {
+        try { db.Database.Migrate(); break; }
+        catch { if (retries == 0) throw; Thread.Sleep(3000); }
+    }
 }
 app.Run();
 

@@ -57,5 +57,11 @@ namespace Gateway.RestClient
 
             return result ?? throw new Exception("Result null");
         }
+
+        public async Task DeleteRequest(string url)
+        {
+            var response = await _httpClient.DeleteAsync(_baseUrl + url);
+            if (!response.IsSuccessStatusCode) throw new Exception("Error while deleting ressource");
+        }
     }
 }

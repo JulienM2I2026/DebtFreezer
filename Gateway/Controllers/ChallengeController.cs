@@ -12,22 +12,17 @@ namespace Gateway.Controllers
     [RequireValidToken]
     public class ChallengeController : ControllerBase
     {
-        private const string ChallengeServiceUrl = "http://localhost:5065/api/Challenge";
+        private readonly string _challengeServiceUrl;
 
-        private readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
-
-        // Convertit un Guid en int positif de façon déterministe (workaround : ChallengeService attend un int)
-        private static int GuidToUserId(string guidStr)
+        public ChallengeController(IConfiguration config)
         {
-            if (!Guid.TryParse(guidStr, out var guid)) return 1;
-            var value = Math.Abs(BitConverter.ToInt32(guid.ToByteArray(), 0));
-            return value == 0 ? 1 : value;
+            _challengeServiceUrl = $"{config["ServiceUrls:ChallengeService"]}/api/Challenge";
         }
 
-        private int GetCurrentUserId()
+        private Guid GetCurrentUserId()
         {
             var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-            return claim != null ? GuidToUserId(claim.Value) : 1;
+            return claim != null && Guid.TryParse(claim.Value, out var guid) ? guid : Guid.Empty;
         }
 
         // GET /api/challenge — liste tous les challenges
@@ -35,7 +30,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> GetAll()
         {
             using var http = new HttpClient();
-            var response = await http.GetAsync(ChallengeServiceUrl);
+            var response = await http.GetAsync(_challengeServiceUrl);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -46,7 +41,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             using var http = new HttpClient();
-            var response = await http.GetAsync($"{ChallengeServiceUrl}/{id}");
+            var response = await http.GetAsync($"{_challengeServiceUrl}/{id}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -58,7 +53,7 @@ namespace Gateway.Controllers
         {
             var userId = GetCurrentUserId();
 
-            var internal_dto = new CreateChallengeInternalDto
+            var internalDto = new CreateChallengeInternalDto
             {
                 Title = dto.Title,
                 Description = dto.Description,
@@ -68,8 +63,8 @@ namespace Gateway.Controllers
             };
 
             using var http = new HttpClient();
-            var json = new StringContent(JsonSerializer.Serialize(internal_dto), Encoding.UTF8, "application/json");
-            var response = await http.PostAsync(ChallengeServiceUrl, json);
+            var json = new StringContent(JsonSerializer.Serialize(internalDto), Encoding.UTF8, "application/json");
+            var response = await http.PostAsync(_challengeServiceUrl, json);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -84,7 +79,7 @@ namespace Gateway.Controllers
 
             using var http = new HttpClient();
             var json = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await http.PostAsync($"{ChallengeServiceUrl}/{id}/join", json);
+            var response = await http.PostAsync($"{_challengeServiceUrl}/{id}/join", json);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -99,7 +94,7 @@ namespace Gateway.Controllers
 
             using var http = new HttpClient();
             var json = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await http.PostAsync($"{ChallengeServiceUrl}/{id}/payment", json);
+            var response = await http.PostAsync($"{_challengeServiceUrl}/{id}/payment", json);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -110,7 +105,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> GetProgress(int id)
         {
             using var http = new HttpClient();
-            var response = await http.GetAsync($"{ChallengeServiceUrl}/{id}/progress");
+            var response = await http.GetAsync($"{_challengeServiceUrl}/{id}/progress");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -121,7 +116,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> GetLeaderboard(int id)
         {
             using var http = new HttpClient();
-            var response = await http.GetAsync($"{ChallengeServiceUrl}/{id}/leaderboard");
+            var response = await http.GetAsync($"{_challengeServiceUrl}/{id}/leaderboard");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");

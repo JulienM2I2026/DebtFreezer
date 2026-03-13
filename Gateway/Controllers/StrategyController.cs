@@ -12,20 +12,17 @@ namespace Gateway.Controllers
     [RequireValidToken]
     public class StrategyController : ControllerBase
     {
-        private const string StrategyServiceUrl = "http://localhost:5106/api/Strategy";
+        private readonly string _strategyServiceUrl;
 
-        // Convertit un Guid en int positif de façon déterministe (workaround : StrategyService attend un int)
-        private static int GuidToUserId(string guidStr)
+        public StrategyController(IConfiguration config)
         {
-            if (!Guid.TryParse(guidStr, out var guid)) return 1;
-            var value = Math.Abs(BitConverter.ToInt32(guid.ToByteArray(), 0));
-            return value == 0 ? 1 : value;
+            _strategyServiceUrl = $"{config["ServiceUrls:StrategyService"]}/api/Strategy";
         }
 
-        private int GetCurrentUserId()
+        private Guid GetCurrentUserId()
         {
             var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-            return claim != null ? GuidToUserId(claim.Value) : 1;
+            return claim != null && Guid.TryParse(claim.Value, out var guid) ? guid : Guid.Empty;
         }
 
         // POST /api/strategy/calculate — calcule et sauvegarde un plan, injecte l'userId depuis le token
@@ -34,7 +31,7 @@ namespace Gateway.Controllers
         {
             var userId = GetCurrentUserId();
 
-            var internal_dto = new CalculateStrategyInternalDto
+            var internalDto = new CalculateStrategyInternalDto
             {
                 UserId = userId,
                 MonthlyBudget = dto.MonthlyBudget,
@@ -42,8 +39,8 @@ namespace Gateway.Controllers
             };
 
             using var http = new HttpClient();
-            var json = new StringContent(JsonSerializer.Serialize(internal_dto), Encoding.UTF8, "application/json");
-            var response = await http.PostAsync($"{StrategyServiceUrl}/calculate", json);
+            var json = new StringContent(JsonSerializer.Serialize(internalDto), Encoding.UTF8, "application/json");
+            var response = await http.PostAsync($"{_strategyServiceUrl}/calculate", json);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -56,7 +53,7 @@ namespace Gateway.Controllers
             var userId = GetCurrentUserId();
 
             using var http = new HttpClient();
-            var response = await http.GetAsync($"{StrategyServiceUrl}/plans/user/{userId}");
+            var response = await http.GetAsync($"{_strategyServiceUrl}/plans/user/{userId}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -67,7 +64,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             using var http = new HttpClient();
-            var response = await http.GetAsync($"{StrategyServiceUrl}/plans/{id}");
+            var response = await http.GetAsync($"{_strategyServiceUrl}/plans/{id}");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
@@ -78,7 +75,7 @@ namespace Gateway.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             using var http = new HttpClient();
-            var response = await http.DeleteAsync($"{StrategyServiceUrl}/plans/{id}");
+            var response = await http.DeleteAsync($"{_strategyServiceUrl}/plans/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
