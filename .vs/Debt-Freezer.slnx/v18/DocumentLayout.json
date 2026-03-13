@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2CADB68C-FB3B-D474-56C8-AE901F365B9C}|Gateway\\Gateway.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\gateway\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2CADB68C-FB3B-D474-56C8-AE901F365B9C}|Gateway\\Gateway.csproj|solutionrelative:gateway\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2CADB68C-FB3B-D474-56C8-AE901F365B9C}|Gateway\\Gateway.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\gateway\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2CADB68C-FB3B-D474-56C8-AE901F365B9C}|Gateway\\Gateway.csproj|solutionrelative:gateway\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\authentificationservice\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|\u00C9l\u00E9ments de solution{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
+      "RelativeMoniker": "D:0:0:{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|\u00C9l\u00E9ments de solution{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +18,31 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "AuthentificationService\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "AuthentificationService\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T11:09:56.818Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "RegisterDto.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\Gateway\\Dtos\\RegisterDto.cs",
-              "RelativeDocumentMoniker": "Gateway\\Dtos\\RegisterDto.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\Gateway\\Dtos\\RegisterDto.cs",
-              "RelativeToolTip": "Gateway\\Dtos\\RegisterDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T11:09:40.879Z",
-              "EditorCaption": ""
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAACQAAAAAAAAAAAAuwE8AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-03-12T15:37:55.678Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\Gateway\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Gateway\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\Gateway\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Gateway\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAbAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Program.cs",
+              "RelativeDocumentMoniker": "AuthentificationService\\Program.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Program.cs",
+              "RelativeToolTip": "AuthentificationService\\Program.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAuwHUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T11:08:25.583Z",
+              "WhenOpened": "2026-03-12T15:35:19.829Z",
               "EditorCaption": ""
             }
           ]

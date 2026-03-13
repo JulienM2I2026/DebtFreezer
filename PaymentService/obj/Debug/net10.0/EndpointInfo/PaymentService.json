@@ -5,10 +5,20 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/v1/payments": {
+    "/api/Payment": {
       "get": {
         "tags": [
-          "Payments"
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -44,7 +54,7 @@
       },
       "post": {
         "tags": [
-          "Payments"
+          "Payment"
         ],
         "requestBody": {
           "content": {
@@ -89,10 +99,10 @@
         }
       }
     },
-    "/api/v1/payments/{id}": {
+    "/api/Payment/{id}": {
       "get": {
         "tags": [
-          "Payments"
+          "Payment"
         ],
         "parameters": [
           {
@@ -130,7 +140,7 @@
       },
       "patch": {
         "tags": [
-          "Payments"
+          "Payment"
         ],
         "parameters": [
           {
@@ -187,7 +197,7 @@
       },
       "delete": {
         "tags": [
-          "Payments"
+          "Payment"
         ],
         "parameters": [
           {
@@ -207,10 +217,10 @@
         }
       }
     },
-    "/api/v1/payments/by-debt/{debtId}": {
+    "/api/Payment/by-debt/{debtId}": {
       "get": {
         "tags": [
-          "Payments"
+          "Payment"
         ],
         "parameters": [
           {
@@ -290,14 +300,52 @@
         },
         "additionalProperties": false
       },
-      "PaymentDto": {
+      "DebtSend": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "debtId": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "creditor": {
+            "type": "string",
+            "nullable": true
+          },
+          "remainingAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "originalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "interestRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
@@ -312,6 +360,9 @@
           "notes": {
             "type": "string",
             "nullable": true
+          },
+          "debt": {
+            "$ref": "#/components/schemas/DebtSend"
           }
         },
         "additionalProperties": false
@@ -344,7 +395,7 @@
   },
   "tags": [
     {
-      "name": "Payments"
+      "name": "Payment"
     }
   ]
 }

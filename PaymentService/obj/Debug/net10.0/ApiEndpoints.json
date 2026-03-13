@@ -1,12 +1,18 @@
 [
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "GetAll",
-    "RelativePath": "api/v1/payments",
+    "RelativePath": "api/Payment",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[PaymentService.Dtos.PaymentDto, PaymentService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -20,9 +26,9 @@
     ]
   },
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "Create",
-    "RelativePath": "api/v1/payments",
+    "RelativePath": "api/Payment",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -46,9 +52,9 @@
     ]
   },
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "GetById",
-    "RelativePath": "api/v1/payments/{id}",
+    "RelativePath": "api/Payment/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -72,9 +78,9 @@
     ]
   },
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "Update",
-    "RelativePath": "api/v1/payments/{id}",
+    "RelativePath": "api/Payment/{id}",
     "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
@@ -103,9 +109,9 @@
     ]
   },
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "Delete",
-    "RelativePath": "api/v1/payments/{id}",
+    "RelativePath": "api/Payment/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -119,9 +125,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PaymentService.Controllers.PaymentsController",
+    "ContainingType": "PaymentService.Controllers.PaymentController",
     "Method": "GetByDebtId",
-    "RelativePath": "api/v1/payments/by-debt/{debtId}",
+    "RelativePath": "api/Payment/by-debt/{debtId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

@@ -1,5 +1,6 @@
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\appsettings.json
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\appsettings.Production.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.staticwebassets.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.exe
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\bin\Debug\net10.0\Gateway.deps.json
@@ -116,6 +117,7 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.csproj.Up2Date
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\Gateway.dll
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Gateway\obj\Debug\net10.0\refint\Gateway.dll
