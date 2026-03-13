@@ -11,5 +11,5 @@ node_modules/
 dist/
 
 # Configuration locale (ne pas versionner)
-**/appsettings.json
-**/appsettings.*.json
+# appsettings.json
+# appsettings.*.json
