@@ -7,8 +7,8 @@
       "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
-      "RelativeMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
+      "AbsoluteMoniker": "D:0:0:{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|\u00C9l\u00E9ments de solution{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
+      "RelativeMoniker": "D:0:0:{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|\u00C9l\u00E9ments de solution{F7B3D445-8A77-65FF-64DD-D0037FF5B8EB}|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,8 +30,7 @@
               "RelativeToolTip": "docker-compose.yml",
               "ViewState": "AgIAACQAAAAAAAAAAAAuwE8AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2026-03-12T15:37:55.678Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-12T15:37:55.678Z"
             },
             {
               "$type": "Document",
@@ -41,7 +40,7 @@
               "RelativeDocumentMoniker": "AuthentificationService\\Program.cs",
               "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Program.cs",
               "RelativeToolTip": "AuthentificationService\\Program.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAuwHoAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAuwHUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-12T15:35:19.829Z",
               "EditorCaption": ""

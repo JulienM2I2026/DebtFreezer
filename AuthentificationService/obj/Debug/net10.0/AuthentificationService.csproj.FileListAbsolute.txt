@@ -132,3 +132,4 @@ C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\Authent
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\AuthentificationService\obj\Debug\net10.0\AuthentificationService.pdb
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\AuthentificationService\obj\Debug\net10.0\AuthentificationService.genruntimeconfig.cache
 C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\AuthentificationService\obj\Debug\net10.0\ref\AuthentificationService.dll
+C:\Users\Administrateur\Documents\exercices\git\projetFinal\Debt-Freezer\AuthentificationService\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

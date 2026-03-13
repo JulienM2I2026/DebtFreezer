@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|c:\\users\\administrateur\\documents\\exercices\\git\\projetfinal\\debt-freezer\\authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06638488-5846-6943-27EF-7796C0EE6AFB}|AuthentificationService\\AuthentificationService.csproj|solutionrelative:authentificationservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
       "RelativeMoniker": "D:0:0:{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|\u00C9l\u00E9ments de solution{9B6C7FDE-4CEE-4FF9-B15E-4B7F953D08EC}|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
     }
@@ -14,19 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "docker-compose.yml",
               "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
               "RelativeDocumentMoniker": "docker-compose.yml",
               "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\docker-compose.yml",
               "RelativeToolTip": "docker-compose.yml",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAuwE8AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2026-03-12T14:49:24.313Z",
+              "WhenOpened": "2026-03-12T15:37:55.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Program.cs",
+              "RelativeDocumentMoniker": "AuthentificationService\\Program.cs",
+              "ToolTip": "C:\\Users\\Administrateur\\Documents\\exercices\\git\\projetFinal\\Debt-Freezer\\AuthentificationService\\Program.cs",
+              "RelativeToolTip": "AuthentificationService\\Program.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAuwHoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T15:35:19.829Z",
               "EditorCaption": ""
             }
           ]
