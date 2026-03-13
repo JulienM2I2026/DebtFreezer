@@ -45,6 +45,7 @@ export interface CreateChallengePayload {
   description?: string;
   targetAmount: number;
   dueDate: string;
+  creatorUserId: string | number;
 }
 
 export async function getChallenges(): Promise<ChallengeDto[]> {
@@ -77,12 +78,15 @@ export async function createChallenge(
   }
 }
 
-export async function joinChallenge(id: number): Promise<boolean> {
+export async function joinChallenge(
+  id: number,
+  userId: string | null
+): Promise<boolean> {
   try {
     const response = await fetch(`${BASE}/api/Challenge/${id}/join`, {
       method: "POST",
       headers: authHeaders(),
-      body: JSON.stringify({}),
+      body: JSON.stringify({ userId }),
     });
     return response.ok;
   } catch (error) {
@@ -93,13 +97,14 @@ export async function joinChallenge(id: number): Promise<boolean> {
 
 export async function recordChallengePayment(
   challengeId: number,
-  paymentId: number
+  paymentId: number,
+  userId: string | null
 ): Promise<boolean> {
   try {
     const response = await fetch(`${BASE}/api/Challenge/${challengeId}/payment`, {
       method: "POST",
       headers: authHeaders(),
-      body: JSON.stringify({ paymentId }),
+      body: JSON.stringify({ paymentId, userId }),
     });
     return response.ok;
   } catch (error) {

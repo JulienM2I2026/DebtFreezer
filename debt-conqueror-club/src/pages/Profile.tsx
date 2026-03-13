@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +25,16 @@ const STRATEGY_LABELS: Record<number, string> = { 1: "Snowball", 2: "Avalanche" 
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [editName, setEditName] = useState('');
+  const [editEmail, setEditEmail] = useState('');
 
   useEffect(() => {
     async function loadProfile() {
       const data = await getMe();
       if (data) {
         setProfile(data);
+        setEditName(data.fullName ?? '');
+        setEditEmail(data.email ?? '');
         localStorage.setItem("fullName", data.fullName);
         localStorage.setItem("email", data.email);
         localStorage.setItem("strategy", String(data.repaymentStrategy));
@@ -38,6 +43,16 @@ const Profile = () => {
     }
     loadProfile();
   }, []);
+
+  const handleSave = () => {
+    if (!editName.trim()) {
+      toast.error("Le nom ne peut pas être vide.");
+      return;
+    }
+    localStorage.setItem("fullName", editName);
+    localStorage.setItem("email", editEmail);
+    toast.success("Modifications enregistrées !");
+  };
 
   const initials = profile?.fullName
     ? profile.fullName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
@@ -159,7 +174,11 @@ const Profile = () => {
                       <User className="h-4 w-4" />
                       Nom complet
                     </Label>
-                    <Input defaultValue={profile?.fullName ?? ""} className="rounded-xl h-11" />
+                    <Input
+                      value={editName}
+                      onChange={e => setEditName(e.target.value)}
+                      className="rounded-xl h-11"
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -168,7 +187,8 @@ const Profile = () => {
                       Adresse e-mail
                     </Label>
                     <Input
-                      defaultValue={profile?.email ?? ""}
+                      value={editEmail}
+                      onChange={e => setEditEmail(e.target.value)}
                       type="email"
                       className="rounded-xl h-11"
                     />
@@ -241,17 +261,25 @@ const Profile = () => {
               </h3>
 
               <div className="flex flex-wrap gap-3">
-                <Button variant="outline" className="rounded-xl">
+                <Button
+                  variant="outline"
+                  className="rounded-xl"
+                  onClick={() => toast.info("Fonctionnalité bientôt disponible.")}
+                >
                   Modifier le mot de passe
                 </Button>
-                <Button variant="outline" className="rounded-xl">
+                <Button
+                  variant="outline"
+                  className="rounded-xl"
+                  onClick={() => toast.info("Fonctionnalité bientôt disponible.")}
+                >
                   Gérer la sécurité du compte
                 </Button>
               </div>
             </div>
 
             <div className="mt-6 pt-2">
-              <Button className="gradient-primary border-0 rounded-xl">
+              <Button className="gradient-primary border-0 rounded-xl" onClick={handleSave}>
                 Enregistrer les modifications
               </Button>
             </div>
