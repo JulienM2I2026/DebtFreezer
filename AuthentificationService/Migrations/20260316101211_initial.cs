@@ -23,6 +23,7 @@ namespace AuthentificationService.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FullName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    TotalDebt = table.Column<double>(type: "double", nullable: false, defaultValue: 0.0),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MonthlyRepaymentBudget = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),

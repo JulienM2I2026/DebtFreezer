@@ -1,4 +1,5 @@
-﻿using DebtService.Models;
+﻿using DebtService.Dtos;
+using DebtService.Models;
 
 namespace DebtService.Repository
 {
@@ -11,5 +12,7 @@ namespace DebtService.Repository
         Task<List<Debt>> GetByUserIdAsync(Guid userId);
         Task<Debt?> GetByUserAndDebtIdAsync(Guid userId, int debtId);
         Task<bool> UpdateAsync(T entity);
+        Task<bool> DeleteAsync(int id);
+        Task<(List<Debt> Items, int TotalCount)> GetPagedAsync(DebtQueryDto query);
     }
 }

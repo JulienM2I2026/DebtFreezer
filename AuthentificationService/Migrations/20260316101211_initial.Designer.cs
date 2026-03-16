@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthentificationService.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260313085038_initial")]
+    [Migration("20260316101211_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -59,6 +59,11 @@ namespace AuthentificationService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(1);
+
+                    b.Property<double>("TotalDebt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("double")
+                        .HasDefaultValue(0.0);
 
                     b.HasKey("UserId");
 

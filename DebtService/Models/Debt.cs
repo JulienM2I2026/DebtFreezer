@@ -34,5 +34,8 @@ namespace DebtService.Models
         [Required(ErrorMessage = "Debt status is required.")]
         public int Status { get; set; }
 
+        // Date du dernier paiement — utilisée pour calculer les intérêts accrués
+        public DateTime? LastPaymentDate { get; set; }
+
     }
 }

@@ -45,6 +45,10 @@ namespace PaymentService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DebtId");
+
+                    b.HasIndex("PaymentDate");
+
                     b.ToTable("Payments");
                 });
 #pragma warning restore 612, 618

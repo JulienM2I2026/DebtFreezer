@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DebtService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class DebtController : ControllerBase
     {
@@ -22,9 +22,19 @@ namespace DebtService.Controllers
             return Ok(await _service.GetAllByUserId(userId));
         }
 
+        // GET /api/v1/Debt/paged?userId=...&page=1&pageSize=10&status=0&type=1&creditor=bank
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] DebtQueryDto query)
+        {
+            var result = await _service.GetPagedAsync(query);
+            return Ok(result);
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
+            Console.WriteLine("ID: ");
+            Console.WriteLine(id);
             return Ok(await _service.GetById(id));
         }
 
@@ -47,6 +57,22 @@ namespace DebtService.Controllers
         }
         */
 
+        // GET /api/v1/Debt/summary?userId=...
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary([FromQuery] Guid userId)
+        {
+            var summary = await _service.GetDebtSummary(userId);
+            return Ok(summary);
+        }
+
+        // GET /api/v1/Debt/by-month?userId=...
+        [HttpGet("by-month")]
+        public async Task<IActionResult> GetByMonth([FromQuery] Guid userId)
+        {
+            var result = await _service.GetDebtByMonth(userId);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DebtReceive receive)
         {
@@ -64,7 +90,21 @@ namespace DebtService.Controllers
             Console.WriteLine("Service UpdateDebtAmount");
             var debt = await _service.UpdateDebtAmount(id, amount);
             return CreatedAtAction(nameof(Create), debt);
+        }
 
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> Patch(int id, [FromBody] UpdateDebtDto dto)
+        {
+            var result = await _service.Patch(id, dto);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var ok = await _service.Delete(id);
+            return ok ? NoContent() : NotFound();
         }
     }
 }

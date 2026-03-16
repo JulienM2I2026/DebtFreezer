@@ -11,11 +11,11 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Debts", url: "/debts", icon: CreditCard },
-  { title: "Payments", url: "/payments", icon: Receipt },
-  { title: "Strategy", url: "/strategy", icon: BarChart3 },
+  { title: "Dettes", url: "/debts", icon: CreditCard },
+  { title: "Paiements", url: "/payments", icon: Receipt },
+  { title: "Strategie", url: "/strategy", icon: BarChart3 },
   { title: "Challenges", url: "/challenges", icon: Trophy },
-  { title: "Profile", url: "/profile", icon: User },
+  { title: "Profil", url: "/profile", icon: User },
 ];
 
 function AppSidebarContent() {

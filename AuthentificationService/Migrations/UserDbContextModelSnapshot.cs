@@ -57,6 +57,11 @@ namespace AuthentificationService.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
+                    b.Property<double>("TotalDebt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("double")
+                        .HasDefaultValue(0.0);
+
                     b.HasKey("UserId");
 
                     b.HasIndex("Email")

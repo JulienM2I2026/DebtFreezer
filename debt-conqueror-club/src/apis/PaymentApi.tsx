@@ -9,7 +9,7 @@ function authHeaders() {
 
 export async function getPayments() {
   try {
-    const response = await fetch(`${BASE}/api/Payment`, {
+    const response = await fetch(`${BASE}/api/v1/Payment`, {
       method: "GET",
       headers: authHeaders(),
     });
@@ -28,7 +28,7 @@ export async function createPayment(payload: {
   notes?: string;
 }) {
   try {
-    const response = await fetch(`${BASE}/api/Payment`, {
+    const response = await fetch(`${BASE}/api/v1/Payment`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(payload),

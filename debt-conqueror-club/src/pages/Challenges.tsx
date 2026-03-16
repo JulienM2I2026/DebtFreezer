@@ -350,7 +350,7 @@ const Challenges = () => {
                   disabled={isJoining || challenge.status !== 0}
                 >
                   {isJoining ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Users className="h-4 w-4 mr-2" />}
-                  Rejoindre
+                  Ajouter un challenger
                 </Button>
 
                 <Button
@@ -363,14 +363,6 @@ const Challenges = () => {
                   Ajouter un paiement
                 </Button>
 
-                <Button
-                  variant="ghost"
-                  className="rounded-xl"
-                  onClick={() => toast.info("Le chat entre participants arrive bientôt !")}
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Voir le chat
-                </Button>
               </div>
             </Card>
           );

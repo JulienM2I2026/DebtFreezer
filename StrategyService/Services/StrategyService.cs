@@ -25,7 +25,7 @@ namespace StrategyService.Services
         public async Task<RepaymentPlanDto> CalculateAndSaveAsync(CalculateStrategyDto dto)
         {
             // 1. Récupérer les dettes ACTIVES de l'utilisateur depuis DebtService
-            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/Debt?userId={dto.UserId}");
+            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/v1/Debt?userId={dto.UserId}");
             userDebts = userDebts.Where(d => d.Status == 0).ToList(); // ACTIVE = 0
 
             if (!userDebts.Any())

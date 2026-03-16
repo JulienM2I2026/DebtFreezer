@@ -37,14 +37,19 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-using (var scope = app.Services.CreateScope())
+if (!app.Environment.IsEnvironment("IntegrationTest"))
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var retries = 10;
-    while (retries-- > 0)
+    using (var scope = app.Services.CreateScope())
     {
-        try { db.Database.Migrate(); break; }
-        catch { if (retries == 0) throw; Thread.Sleep(3000); }
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var retries = 10;
+        while (retries-- > 0)
+        {
+            try { db.Database.Migrate(); break; }
+            catch { if (retries == 0) throw; Thread.Sleep(3000); }
+        }
     }
 }
 app.Run();
+
+public partial class Program { }

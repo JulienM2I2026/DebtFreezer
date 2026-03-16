@@ -57,6 +57,10 @@ namespace StrategyService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("RepaymentPlans");
                 });
 #pragma warning restore 612, 618

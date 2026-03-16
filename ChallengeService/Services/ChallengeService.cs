@@ -148,7 +148,7 @@ namespace ChallengeService.Services
 
             // 2. Récupérer le paiement depuis PaymentService (inclut la dette imbriquée)
             var payment = await _serviceClient.GetAsync<ExternalPaymentDto>(
-                "PaymentService", $"/api/Payment/{dto.PaymentId}")
+                "PaymentService", $"/api/v1/Payment/{dto.PaymentId}")
                 ?? throw new KeyNotFoundException($"Payment {dto.PaymentId} not found in PaymentService.");
 
             // 3. Valider que la dette appartient bien à cet utilisateur (via le Debt imbriqué dans PaymentDto)
@@ -250,7 +250,7 @@ namespace ChallengeService.Services
         /// </summary>
         private async Task ValidateUserHasDebtsAsync(Guid userId)
         {
-            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/Debt?userId={userId}");
+            var userDebts = await _serviceClient.GetListAsync<ExternalDebtDto>("DebtService", $"/api/v1/Debt?userId={userId}");
 
             if (!userDebts.Any())
                 throw new InvalidOperationException(

@@ -6,21 +6,19 @@ using System.Net.Http.Headers;
 
 namespace Gateway.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private readonly Client<AuthDto, LoginDto> clientLogin;
         private readonly Client<AuthDto, RegisterDto> clientRegister;
-        private readonly IConfiguration _config;
+        private readonly string _authServiceUrl;
 
         public AuthController(IConfiguration config)
         {
-            _config = config;
-            var authServiceUrl = _config["ServiceUrls:AuthService"];
-            clientLogin = new Client<AuthDto, LoginDto>($"{authServiceUrl}/api/Auth/");
-            clientRegister = new Client<AuthDto, RegisterDto>($"{authServiceUrl}/api/Auth/");
+            _authServiceUrl = $"{config["ServiceUrls:AuthService"]}/api/v1/Auth";
+            clientLogin = new Client<AuthDto, LoginDto>($"{_authServiceUrl}/");
+            clientRegister = new Client<AuthDto, RegisterDto>($"{_authServiceUrl}/");
         }
 
         [HttpPost("login")]
@@ -43,7 +41,7 @@ namespace Gateway.Controllers
             using var http = new HttpClient();
             var json = System.Text.Json.JsonSerializer.Serialize(body);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var response = await http.PostAsync("http://localhost:5130/api/Auth/forgot-password", content);
+            var response = await http.PostAsync($"{_authServiceUrl}/forgot-password", content);
             var responseBody = await response.Content.ReadAsStringAsync();
             return Content(responseBody, "application/json");
         }
@@ -54,14 +52,14 @@ namespace Gateway.Controllers
             using var http = new HttpClient();
             var json = System.Text.Json.JsonSerializer.Serialize(body);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var response = await http.PostAsync("http://localhost:5130/api/Auth/reset-password", content);
+            var response = await http.PostAsync($"{_authServiceUrl}/reset-password", content);
             var responseBody = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return Content(responseBody, "application/json");
             return StatusCode((int)response.StatusCode, responseBody);
         }
 
-        // GET /api/auth/me — retourne le profil de l'utilisateur connecté
+        // GET /api/v1/auth/me — retourne le profil de l'utilisateur connecté
         [HttpGet("me")]
         [RequireValidToken]
         public async Task<IActionResult> Me()
@@ -73,7 +71,7 @@ namespace Gateway.Controllers
             using var http = new HttpClient();
             http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rawToken);
 
-            var response = await http.GetAsync("http://localhost:5130/api/Auth/me");
+            var response = await http.GetAsync($"{_authServiceUrl}/me");
             if (!response.IsSuccessStatusCode)
                 return Unauthorized();
 

@@ -8,10 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, CreditCard, GraduationCap, Banknote } from "lucide-react";
+import { Plus, Trash2, CreditCard, GraduationCap, Banknote } from "lucide-react";
 import { toast } from "sonner";
 import { DebtCreateUpdateDto } from "@/dtos/DebtCreateDto";
-import { getDebts, createDebt } from "@/apis/DebtApi";
+import { getDebts, createDebt, deleteDebt } from "@/apis/DebtApi";
 
 // Mapping enum backend (0=CREDIT_CARD, 1=PERSONAL_LOAN, 2=STUDENT_LOAN)
 const typeKeyMap: Record<number, string> = {
@@ -45,6 +45,7 @@ const Debts = () => {
   const [editingDebt, setEditingDebt] = useState<Partial<DebtCreateUpdateDto>>(emptyForm);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState<number | null>(null);
 
   async function loadDebts() {
     const data = await getDebts();
@@ -91,6 +92,18 @@ const Debts = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleDelete = async (id: number) => {
+    setDeleting(id);
+    const ok = await deleteDebt(id);
+    if (ok) {
+      setDebts(prev => prev.filter(d => d.id !== id));
+      toast.success("Dette supprimée");
+    } else {
+      toast.error("Erreur lors de la suppression");
+    }
+    setDeleting(null);
   };
 
   return (
@@ -196,17 +209,31 @@ const Debts = () => {
                     <Badge variant="secondary" className="text-xs mt-0.5">{typeLabels[typeKey]}</Badge>
                   </div>
                 </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-destructive shrink-0"
+                  disabled={deleting === debt.id}
+                  onClick={() => handleDelete(debt.id)}
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </Button>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Montant restant</span>
-                  <span className="font-semibold text-card-foreground">{remaining}€</span>
+                  <span className="font-semibold text-card-foreground">{remaining.toLocaleString()}€</span>
                 </div>
                 <Progress value={Math.min(pct, 100)} className="h-2" />
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{pct}% Payé</span>
                   <span>{debt.interestRate}% Intérêt</span>
                 </div>
+                {debt.accruedInterest > 0 && (
+                  <div className="text-xs text-amber-600 font-medium">
+                    Intérêts courus : {debt.accruedInterest.toFixed(2)}€
+                  </div>
+                )}
               </div>
             </Card>
           );
@@ -228,8 +255,10 @@ const Debts = () => {
               <TableHead>Type</TableHead>
               <TableHead className="text-right">Montant original</TableHead>
               <TableHead className="text-right">Montant restant</TableHead>
-              <TableHead className="text-right">Intérêt</TableHead>
+              <TableHead className="text-right">Intérêts courus</TableHead>
+              <TableHead className="text-right">Taux</TableHead>
               <TableHead className="text-right">Date de fin</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -243,10 +272,24 @@ const Debts = () => {
                   <TableCell>
                     <Badge variant="outline" className="text-xs">{typeLabels[typeKey]}</Badge>
                   </TableCell>
-                  <TableCell className="text-right">{debt.originalAmount}€</TableCell>
-                  <TableCell className="text-right">{remaining}€</TableCell>
+                  <TableCell className="text-right">{debt.originalAmount.toLocaleString()}€</TableCell>
+                  <TableCell className="text-right">{remaining.toLocaleString()}€</TableCell>
+                  <TableCell className="text-right text-amber-600">
+                    {debt.accruedInterest > 0 ? `${debt.accruedInterest.toFixed(2)}€` : "—"}
+                  </TableCell>
                   <TableCell className="text-right">{debt.interestRate}%</TableCell>
                   <TableCell className="text-right">{dueDate}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive"
+                      disabled={deleting === debt.id}
+                      onClick={() => handleDelete(debt.id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               );
             })}

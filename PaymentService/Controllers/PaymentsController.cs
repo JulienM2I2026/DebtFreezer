@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace PaymentService.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 public class PaymentController : ControllerBase
 {
@@ -22,8 +22,7 @@ public class PaymentController : ControllerBase
     public async Task<ActionResult<List<PaymentDto>>> GetAll([FromQuery] Guid userId)
     {
         Console.WriteLine("Payment Controller GetAll");
-        var payments = await _service.GetAllAsync();
-        Console.WriteLine(JsonSerializer.Serialize(payments)); // voir toutes les propriétés
+        var payments = await _service.GetAllAsync(userId);
         return Ok(payments);
     }
 
@@ -67,5 +66,12 @@ public class PaymentController : ControllerBase
     {
         var ok = await _service.DeleteAsync(id);
         return ok ? NoContent() : NotFound();
+    }
+
+    [HttpDelete("by-debt/{debtId:int}")]
+    public async Task<IActionResult> DeleteByDebtId(int debtId)
+    {
+        await _service.DeleteByDebtIdAsync(debtId);
+        return NoContent();
     }
 }

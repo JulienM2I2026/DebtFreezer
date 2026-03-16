@@ -41,6 +41,9 @@ namespace DebtService.Migrations
                     b.Property<double>("InterestRate")
                         .HasColumnType("double");
 
+                    b.Property<DateTime?>("LastPaymentDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<double>("OriginalAmount")
                         .HasColumnType("double");
 
@@ -57,6 +60,12 @@ namespace DebtService.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId", "Status");
 
                     b.ToTable("Debts");
                 });

@@ -4,7 +4,7 @@ using StrategyService.Services;
 
 namespace StrategyService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class StrategyController : ControllerBase
     {

@@ -21,19 +21,21 @@ public class PaymentService : IPaymentService
         _config = config;
         var debtServiceUrl = _config["ServiceUrls:DebtService"];
 
-        _client = new Client<DebtSend, DebtReceive>($"{debtServiceUrl}/api/Debt/");
-        _createClient = new Client<bool, double>($"{debtServiceUrl}/api/Debt/");
+        _client = new Client<DebtSend, DebtReceive>($"{debtServiceUrl}/api/v1/Debt/");
+        _createClient = new Client<bool, double>($"{debtServiceUrl}/api/v1/Debt/");
 
     }
 
-    public async Task<List<PaymentDto>> GetAllAsync()
+    public async Task<List<PaymentDto>> GetAllAsync(Guid userId)
     {
         var payments = await _paymentRepository.GetAllAsync();
 
         List<PaymentDto> paymentSends = new List<PaymentDto>();
         foreach (Payment payment in payments)
         {
-            paymentSends.Add(await EntityToDto(payment));
+            var dto = await EntityToDto(payment);
+            if (dto.Debt == null || dto.Debt.UserId == userId)
+                paymentSends.Add(dto);
         }
         return paymentSends;
     }
@@ -102,9 +104,22 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public Task<List<PaymentDto>> GetByDebtIdAsync(int debtId)
+    public async Task<List<PaymentDto>> GetByDebtIdAsync(int debtId)
     {
-        throw new NotImplementedException();
+        var payments = await _paymentRepository.FindAsync(p => p.DebtId == debtId);
+        var result = new List<PaymentDto>();
+        foreach (var payment in payments)
+            result.Add(await EntityToDto(payment));
+        return result;
+    }
+
+    public async Task DeleteByDebtIdAsync(int debtId)
+    {
+        var payments = await _paymentRepository.FindAsync(p => p.DebtId == debtId);
+        foreach (var payment in payments)
+            await _paymentRepository.DeleteAsync(payment);
+        if (payments.Count > 0)
+            await _paymentRepository.SaveChangesAsync();
     }
 
     private async Task<PaymentDto> EntityToDto(Payment payment)
@@ -115,7 +130,14 @@ public class PaymentService : IPaymentService
             PaymentDate = payment.PaymentDate,
             Notes = payment.Notes
         };
-        send.Debt = await _client.GetRequest(payment.DebtId.ToString());
+        try
+        {
+            send.Debt = await _client.GetRequest(payment.DebtId.ToString());
+        }
+        catch
+        {
+            send.Debt = null;
+        }
         return send;
     }
 }

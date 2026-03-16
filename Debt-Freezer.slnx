@@ -4,6 +4,8 @@
   </Folder>
   <Project Path="AuthentificationService/AuthentificationService.csproj" />
   <Project Path="ChallengeService/ChallengeService.csproj" />
+  <Project Path="DebtService.IntegrationTests/DebtService.IntegrationTests.csproj" />
+  <Project Path="DebtService.Tests/DebtService.Tests.csproj" />
   <Project Path="DebtService/DebtService.csproj" />
   <Project Path="Gateway/Gateway.csproj" />
   <Project Path="PaymentService/PaymentService.csproj" />

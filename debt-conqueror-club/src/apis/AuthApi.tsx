@@ -11,13 +11,14 @@ export interface UserProfile {
   userId: string;
   email: string;
   fullName: string;
+  totalDebt: number;
   monthlyRepaymentBudget: number;
   repaymentStrategy: number; // 1 = Snowball, 2 = Avalanche
 }
 
 export async function getMe(): Promise<UserProfile | null> {
   try {
-    const response = await fetch(`${BASE}/api/Auth/me`, {
+    const response = await fetch(`${BASE}/api/v1/Auth/me`, {
       headers: authHeaders(),
     });
     if (!response.ok) return null;

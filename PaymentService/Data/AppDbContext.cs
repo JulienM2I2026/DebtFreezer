@@ -24,6 +24,11 @@ public class AppDbContext : DbContext
 
             entity.Property(p => p.Notes)
                 .HasMaxLength(500);
+
+            // Requêtes fréquentes par dette
+            entity.HasIndex(p => p.DebtId);
+            // Tri/filtrage par date
+            entity.HasIndex(p => p.PaymentDate);
         });
     }
 }

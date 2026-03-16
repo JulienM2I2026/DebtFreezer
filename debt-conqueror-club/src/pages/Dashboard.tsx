@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { debtEvolutionData } from "@/lib/mockData";
-import { getDebts } from "@/apis/DebtApi";
+import { getDebts, getDebtByMonth } from "@/apis/DebtApi";
 import { getPayments } from "@/apis/PaymentApi";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -93,13 +92,19 @@ const StatCard = ({
 const Dashboard = () => {
   const [debts, setDebts] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
+  const [byMonth, setByMonth] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
-      const [debtsData, paymentsData] = await Promise.all([getDebts(), getPayments()]);
+      const [debtsData, paymentsData, byMonthData] = await Promise.all([
+        getDebts(),
+        getPayments(),
+        getDebtByMonth(),
+      ]);
       setDebts(debtsData ?? []);
       setPayments(paymentsData ?? []);
+      setByMonth(byMonthData ?? []);
       setLoading(false);
     }
     loadData();
@@ -122,6 +127,17 @@ const Dashboard = () => {
     () => [...debts].sort((a, b) => b.interestRate - a.interestRate)[0],
     [debts]
   );
+
+  // Évolution des dettes par mois pour le line chart
+  const debtEvolutionData = useMemo(() => {
+    const MONTH_NAMES = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"];
+    return byMonth
+      .slice(-6)
+      .map((d: any) => ({
+        month: `${MONTH_NAMES[d.month - 1]} ${String(d.year).slice(-2)}`,
+        total: Math.round(d.totalOriginalAmount),
+      }));
+  }, [byMonth]);
 
   // Paiements groupés par mois pour le bar chart
   const paymentHistoryData = useMemo(() => {

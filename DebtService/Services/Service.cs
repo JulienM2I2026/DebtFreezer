@@ -9,10 +9,13 @@ namespace DebtService.Services
     {
 
         private readonly IRepository<Debt> _repository;
+        private readonly string _paymentServiceUrl;
 
-        public Service(IRepository<Debt> repository)
+        public Service(IRepository<Debt> repository, IConfiguration config)
         {
             _repository = repository;
+            // _paymentServiceUrl = config["ServiceUrls:PaymentService"] ?? "http://localhost:5001";
+            _paymentServiceUrl = config["ServiceUrls:PaymentService"] ?? "http://localhost:5272";
         }
 
 
@@ -52,6 +55,8 @@ namespace DebtService.Services
                 RemainingAmount = d.RemainingAmount,
                 Status = d.Status,
                 DueDate = d.DueDate,
+                LastPaymentDate = d.LastPaymentDate,
+                AccruedInterest = ComputeAccruedInterest(d),
             }).ToList();
         }
 
@@ -81,6 +86,7 @@ namespace DebtService.Services
             if (debt == null || debt.Status == 1 || debt.RemainingAmount < amount)
                 return false;
             debt.RemainingAmount -= amount;
+            debt.LastPaymentDate = DateTime.UtcNow;
             if(debt.RemainingAmount == 0)
                 debt.Status = 1;
 
@@ -88,6 +94,38 @@ namespace DebtService.Services
             return true;
         }
 
+
+        public async Task<DebtSend?> Patch(int id, UpdateDebtDto dto)
+        {
+            Debt? debt = await _repository.GetByIdAsync(id);
+            if (debt == null) return null;
+
+            if (dto.Creditor != null) debt.Creditor = dto.Creditor;
+            if (dto.OriginalAmount.HasValue) debt.OriginalAmount = dto.OriginalAmount.Value;
+            if (dto.RemainingAmount.HasValue) debt.RemainingAmount = dto.RemainingAmount.Value;
+            if (dto.InterestRate.HasValue) debt.InterestRate = dto.InterestRate.Value;
+            if (dto.DueDate.HasValue) debt.DueDate = dto.DueDate.Value;
+            if (dto.Type.HasValue) debt.Type = dto.Type.Value;
+            if (dto.Status.HasValue) debt.Status = dto.Status.Value;
+
+            await _repository.UpdateAsync(debt);
+            return await EntityToDto(debt);
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var ok = await _repository.DeleteAsync(id);
+            if (ok)
+            {
+                try
+                {
+                    using var http = new HttpClient();
+                    await http.DeleteAsync($"{_paymentServiceUrl}/api/v1/Payment/by-debt/{id}");
+                }
+                catch { /* ne pas bloquer si PaymentService indisponible */ }
+            }
+            return ok;
+        }
 
         private Debt DtoToEntity(DebtReceive receive)
         {
@@ -97,11 +135,86 @@ namespace DebtService.Services
 
         private async Task<DebtSend> EntityToDto(Debt debt)
         {
-            DebtSend send = new DebtSend() { Id = debt.Id, UserId = debt.UserId, Creditor = debt.Creditor, OriginalAmount = debt.OriginalAmount, InterestRate = debt.InterestRate, DueDate = debt.DueDate, Type = debt.Type, Status = debt.Status, RemainingAmount = debt.RemainingAmount };
-
-            // Il faudra mettre le UserName plus tard
+            DebtSend send = new DebtSend()
+            {
+                Id = debt.Id,
+                UserId = debt.UserId,
+                Creditor = debt.Creditor,
+                OriginalAmount = debt.OriginalAmount,
+                InterestRate = debt.InterestRate,
+                DueDate = debt.DueDate,
+                Type = debt.Type,
+                Status = debt.Status,
+                RemainingAmount = debt.RemainingAmount,
+                LastPaymentDate = debt.LastPaymentDate,
+                AccruedInterest = ComputeAccruedInterest(debt),
+            };
 
             return send;
+        }
+
+        public async Task<PagedResult<DebtSend>> GetPagedAsync(DebtQueryDto query)
+        {
+            var (items, total) = await _repository.GetPagedAsync(query);
+            return new PagedResult<DebtSend>
+            {
+                Items = items.Select(d => new DebtSend
+                {
+                    Id = d.Id,
+                    UserId = d.UserId,
+                    Creditor = d.Creditor,
+                    InterestRate = d.InterestRate,
+                    Type = d.Type,
+                    OriginalAmount = d.OriginalAmount,
+                    RemainingAmount = d.RemainingAmount,
+                    Status = d.Status,
+                    DueDate = d.DueDate,
+                    LastPaymentDate = d.LastPaymentDate,
+                    AccruedInterest = ComputeAccruedInterest(d),
+                }).ToList(),
+                TotalCount = total,
+                Page = query.Page,
+                PageSize = query.PageSize,
+            };
+        }
+
+        public async Task<DebtSummaryDto> GetDebtSummary(Guid userId)
+        {
+            var debts = await _repository.GetByUserIdAsync(userId);
+            return new DebtSummaryDto
+            {
+                TotalOriginalAmount = debts.Sum(d => d.OriginalAmount),
+                TotalRemainingAmount = debts.Sum(d => d.RemainingAmount),
+                TotalPaidAmount = debts.Sum(d => d.OriginalAmount - d.RemainingAmount),
+                ActiveDebtsCount = debts.Count(d => d.Status == 0),
+                PaidDebtsCount = debts.Count(d => d.Status == 1),
+                AverageInterestRate = debts.Count > 0 ? debts.Average(d => d.InterestRate) : 0,
+                TotalAccruedInterest = debts.Sum(d => ComputeAccruedInterest(d)),
+            };
+        }
+
+        public async Task<List<DebtByMonthDto>> GetDebtByMonth(Guid userId)
+        {
+            var debts = await _repository.GetByUserIdAsync(userId);
+            return debts
+                .GroupBy(d => new { d.DueDate.Year, d.DueDate.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .Select(g => new DebtByMonthDto
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    DebtCount = g.Count(),
+                    TotalOriginalAmount = g.Sum(d => d.OriginalAmount),
+                })
+                .ToList();
+        }
+
+        private static double ComputeAccruedInterest(Debt debt)
+        {
+            if (debt.LastPaymentDate == null || debt.Status == 1)
+                return 0d;
+            var days = (DateTime.UtcNow - debt.LastPaymentDate.Value).TotalDays;
+            return Math.Round(debt.RemainingAmount * (debt.InterestRate / 100.0 / 365.0) * days, 2);
         }
     }
 }

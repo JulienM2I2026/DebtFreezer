@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Gateway.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [RequireValidToken]
     public class PaymentController : ControllerBase
@@ -20,7 +20,7 @@ namespace Gateway.Controllers
         {
             _config = config;
             var PaymentServiceUrl = _config["ServiceUrls:PaymentService"];
-            _client = new Client<PaymentDto, CreatePaymentDto>($"{PaymentServiceUrl}/api/Payment");
+            _client = new Client<PaymentDto, CreatePaymentDto>($"{PaymentServiceUrl}/api/v1/Payment");
         }
 
         [HttpGet]

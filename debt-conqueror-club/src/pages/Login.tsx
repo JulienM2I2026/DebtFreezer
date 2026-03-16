@@ -16,7 +16,7 @@ const Login = () => {
   });
 
   async function login(dto: LoginDto) {
-    const response = await fetch("http://localhost:5099/api/Auth/login", {
+    const response = await fetch("http://localhost:5099/api/v1/Auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

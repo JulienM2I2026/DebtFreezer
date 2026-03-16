@@ -19,7 +19,7 @@ const Signup = () => {
   });
 
   async function createAccount(dto: RegisterDto) {
-    const response = await fetch("http://localhost:5099/api/Auth/register", {
+    const response = await fetch("http://localhost:5099/api/v1/Auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

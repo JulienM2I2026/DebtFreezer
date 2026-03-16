@@ -11,6 +11,8 @@
         public DateTime DueDate { get; set; }
         public int Type { get; set; }
         public int Status { get; set; }
+        public double AccruedInterest { get; set; }
+        public DateTime? LastPaymentDate { get; set; }
     }
 }
 

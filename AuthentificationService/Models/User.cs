@@ -14,7 +14,9 @@ namespace AuthentificationService.Models
         [Required, StringLength(120)]
         public string FullName { get; set; } = string.Empty;
 
-        //public int TotalDebt { get; set; } A récupérer je pense via API DB Debt
+        // Montant total des dettes restantes (mis à jour par le service de dettes)
+        [Range(0, double.MaxValue)]
+        public double TotalDebt { get; set; } = 0d;
 
         // Stocke un hash (jamais le mot de passe)
         [Required]
@@ -41,7 +43,6 @@ namespace AuthentificationService.Models
         {
             Email = email;
             FullName = fullName;
-            //TotalDebt = totalDebt;
             PasswordHash = passwordHash;
         }
     }

@@ -50,7 +50,7 @@ export interface CreateChallengePayload {
 
 export async function getChallenges(): Promise<ChallengeDto[]> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge`, {
       headers: authHeaders(),
     });
     if (!response.ok) return [];
@@ -65,7 +65,7 @@ export async function createChallenge(
   payload: CreateChallengePayload
 ): Promise<ChallengeDto | null> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(payload),
@@ -83,7 +83,7 @@ export async function joinChallenge(
   userId: string | null
 ): Promise<boolean> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge/${id}/join`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge/${id}/join`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify({ userId }),
@@ -101,7 +101,7 @@ export async function recordChallengePayment(
   userId: string | null
 ): Promise<boolean> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge/${challengeId}/payment`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge/${challengeId}/payment`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify({ paymentId, userId }),
@@ -117,7 +117,7 @@ export async function getChallengeProgress(
   id: number
 ): Promise<ChallengeProgressDto | null> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge/${id}/progress`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge/${id}/progress`, {
       headers: authHeaders(),
     });
     if (!response.ok) return null;
@@ -130,7 +130,7 @@ export async function getChallengeProgress(
 
 export async function getLeaderboard(id: number): Promise<LeaderboardEntryDto[]> {
   try {
-    const response = await fetch(`${BASE}/api/Challenge/${id}/leaderboard`, {
+    const response = await fetch(`${BASE}/api/v1/Challenge/${id}/leaderboard`, {
       headers: authHeaders(),
     });
     if (!response.ok) return [];

@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Gateway.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [RequireValidToken]
     public class StrategyController : ControllerBase
@@ -16,7 +16,7 @@ namespace Gateway.Controllers
 
         public StrategyController(IConfiguration config)
         {
-            _strategyServiceUrl = $"{config["ServiceUrls:StrategyService"]}/api/Strategy";
+            _strategyServiceUrl = $"{config["ServiceUrls:StrategyService"]}/api/v1/Strategy";
         }
 
         private Guid GetCurrentUserId()

@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Gateway.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [RequireValidToken]
     public class ChallengeController : ControllerBase
@@ -16,7 +16,7 @@ namespace Gateway.Controllers
 
         public ChallengeController(IConfiguration config)
         {
-            _challengeServiceUrl = $"{config["ServiceUrls:ChallengeService"]}/api/Challenge";
+            _challengeServiceUrl = $"{config["ServiceUrls:ChallengeService"]}/api/v1/Challenge";
         }
 
         private Guid GetCurrentUserId()

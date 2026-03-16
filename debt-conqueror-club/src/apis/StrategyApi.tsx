@@ -30,7 +30,7 @@ export async function calculateStrategy(
   payload: CalculateStrategyPayload
 ): Promise<RepaymentPlanDto | null> {
   try {
-    const response = await fetch(`${BASE}/api/Strategy/calculate`, {
+    const response = await fetch(`${BASE}/api/v1/Strategy/calculate`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(payload),
@@ -46,7 +46,7 @@ export async function calculateStrategy(
 // Récupère les plans sauvegardés de l'utilisateur connecté
 export async function getUserPlans(): Promise<RepaymentPlanDto[]> {
   try {
-    const response = await fetch(`${BASE}/api/Strategy/plans`, {
+    const response = await fetch(`${BASE}/api/v1/Strategy/plans`, {
       headers: authHeaders(),
     });
     if (!response.ok) return [];
@@ -60,7 +60,7 @@ export async function getUserPlans(): Promise<RepaymentPlanDto[]> {
 // Supprime un plan par son ID
 export async function deletePlan(id: number): Promise<boolean> {
   try {
-    const response = await fetch(`${BASE}/api/Strategy/plans/${id}`, {
+    const response = await fetch(`${BASE}/api/v1/Strategy/plans/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });

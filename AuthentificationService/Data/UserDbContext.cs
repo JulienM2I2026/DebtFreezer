@@ -34,7 +34,10 @@ namespace AuthentificationService.Data
                           .HasConversion<int>()
                           .HasDefaultValue(StrategyType.Snowball)
                           .IsRequired();
-                }); 
+                    entity.Property(x => x.TotalDebt)
+                          .HasDefaultValue(0d)
+                          .IsRequired();
+                });
         }
     }
 
