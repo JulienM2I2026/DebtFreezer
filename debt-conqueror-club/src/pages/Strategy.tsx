@@ -19,6 +19,7 @@ import {
   Wallet,
   Gauge,
   Target,
+  EuroIcon
 } from "lucide-react";
 import {
   BarChart,
@@ -305,10 +306,10 @@ const Strategy = () => {
 
             <div className="rounded-xl bg-muted/40 p-4 min-h-[96px] flex flex-col justify-between">
               <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-                <DollarSign className="h-3 w-3" /> Intérêts totaux
+                <EuroIcon className="h-3 w-3" /> Intérêts totaux
               </p>
               <p className="text-xl font-display font-bold text-card-foreground">
-                ${avalanche.totalInterest.toLocaleString()}
+                €{avalanche.totalInterest.toLocaleString()}
               </p>
             </div>
 
@@ -380,10 +381,10 @@ const Strategy = () => {
 
             <div className="rounded-xl bg-muted/40 p-4 min-h-[96px] flex flex-col justify-between">
               <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-                <DollarSign className="h-3 w-3" /> Intérêts totaux
+                <EuroIcon className="h-3 w-3" /> Intérêts totaux
               </p>
               <p className="text-xl font-display font-bold text-card-foreground">
-                ${snowball.totalInterest.toLocaleString()}
+                €{snowball.totalInterest.toLocaleString()}
               </p>
             </div>
 
@@ -459,9 +460,9 @@ const Strategy = () => {
                 <YAxis
                   tick={{ fontSize: 12 }}
                   stroke="hsl(220, 10%, 46%)"
-                  tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+                  tickFormatter={(v) => `€${(v / 1000).toFixed(0)}k`}
                 />
-                <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                <Tooltip formatter={(v: number) => `€${v.toLocaleString()}`} />
                 <Bar
                   dataKey="total"
                   fill="hsl(239, 84%, 67%)"
@@ -484,9 +485,9 @@ const Strategy = () => {
                 <YAxis
                   tick={{ fontSize: 12 }}
                   stroke="hsl(220, 10%, 46%)"
-                  tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+                  tickFormatter={(v) => `€${(v / 1000).toFixed(0)}k`}
                 />
-                <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                <Tooltip formatter={(v: number) => `€${v.toLocaleString()}`} />
                 <Bar
                   dataKey="total"
                   fill="hsl(217, 91%, 60%)"
