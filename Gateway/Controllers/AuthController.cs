@@ -78,5 +78,21 @@ namespace Gateway.Controllers
             var content = await response.Content.ReadAsStringAsync();
             return Content(content, "application/json");
         }
+
+        // GET /api/v1/auth/users — liste tous les utilisateurs (pour sélection challenger)
+        [HttpGet("users")]
+        [RequireValidToken]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var rawToken = Request.Headers["Authorization"].FirstOrDefault()?.Replace("Bearer ", "");
+
+            using var http = new HttpClient();
+            if (!string.IsNullOrWhiteSpace(rawToken))
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rawToken);
+
+            var response = await http.GetAsync($"{_authServiceUrl}/users");
+            var content = await response.Content.ReadAsStringAsync();
+            return Content(content, "application/json");
+        }
     }
 }

@@ -112,5 +112,14 @@ namespace ChallengeService.Controllers
             var leaderboard = await _challengeService.GetLeaderboardAsync(id);
             return Ok(leaderboard);
         }
+
+        // DELETE /api/challenge/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _challengeService.DeleteAsync(id);
+            if (!deleted) return NotFound($"Challenge with id {id} not found.");
+            return NoContent();
+        }
     }
 }

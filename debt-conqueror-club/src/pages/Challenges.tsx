@@ -1,20 +1,22 @@
 import { useMemo, useState, useEffect } from "react";
 import {
-  getChallenges, createChallenge, joinChallenge, recordChallengePayment,
+  getChallenges, createChallenge, joinChallenge, deleteChallenge,
   getChallengeProgress, type ChallengeDto, type ChallengeProgressDto,
 } from "@/apis/ChallengeApi";
+import { getUsers, type UserSummary } from "@/apis/AuthApi";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import {
   Plus, Trophy, Users, Target, Medal, CalendarDays, ArrowRight,
-  Wallet, Crown, MessageCircle, Loader2,
+  Banknote, Crown, Loader2, Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -30,15 +32,16 @@ const Challenges = () => {
   });
   const [loadingProgress, setLoadingProgress] = useState(false);
 
-  // Dialog enregistrer un paiement dans un challenge
-  const [paymentDialog, setPaymentDialog] = useState<{ open: boolean; challengeId: number | null }>({
+  // Dialog ajouter un challenger
+  const [challengerDialog, setChallengerDialog] = useState<{ open: boolean; challengeId: number | null }>({
     open: false, challengeId: null,
   });
-  const [paymentId, setPaymentId] = useState('');
-  const [recordingPayment, setRecordingPayment] = useState(false);
+  const [users, setUsers] = useState<UserSummary[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [addingChallenger, setAddingChallenger] = useState(false);
 
   // Suivi du challenge en cours de rejoindre
-  const [joiningId, setJoiningId] = useState<number | null>(null);
+  const [joiningId] = useState<number | null>(null);
 
   const userId = localStorage.getItem("userId");
 
@@ -81,17 +84,43 @@ const Challenges = () => {
     setForm({ name: "", goal: "", endDate: "" });
   };
 
-  // --- Rejoindre un challenge ---
-  const handleJoin = async (challengeId: number) => {
-    setJoiningId(challengeId);
-    const success = await joinChallenge(challengeId, userId);
+  // --- Supprimer un challenge ---
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  const handleDelete = async (challengeId: number) => {
+    setDeletingId(challengeId);
+    const ok = await deleteChallenge(challengeId);
+    if (ok) {
+      setChallenges(prev => prev.filter(c => c.id !== challengeId));
+      toast.success("Challenge supprimé.");
+    } else {
+      toast.error("Erreur lors de la suppression du challenge.");
+    }
+    setDeletingId(null);
+  };
+
+  // --- Ouvrir le dialog d'ajout de challenger ---
+  const handleOpenChallengerDialog = async (challengeId: number) => {
+    setSelectedUserId("");
+    setChallengerDialog({ open: true, challengeId });
+    const data = await getUsers();
+    setUsers(data);
+  };
+
+  // --- Ajouter un challenger sélectionné ---
+  const handleAddChallenger = async () => {
+    if (!challengerDialog.challengeId || !selectedUserId) return;
+    setAddingChallenger(true);
+    const success = await joinChallenge(challengerDialog.challengeId, selectedUserId);
     if (success) {
-      toast.success("Vous avez rejoint le challenge !");
+      toast.success("Challenger ajouté au challenge !");
+      setChallengerDialog({ open: false, challengeId: null });
+      setSelectedUserId("");
       await loadChallenges();
     } else {
-      toast.error("Impossible de rejoindre ce challenge. Vous avez peut-être déjà rejoint, ou vous n'avez pas de dettes enregistrées.");
+      toast.error("Impossible d'ajouter ce challenger. Il a peut-être déjà rejoint ce challenge, ou n'a pas de dettes enregistrées.");
     }
-    setJoiningId(null);
+    setAddingChallenger(false);
   };
 
   // --- Voir la progression d'un challenge ---
@@ -103,47 +132,16 @@ const Challenges = () => {
     setLoadingProgress(false);
   };
 
-  // --- Ouvrir le dialog de paiement ---
-  const handleOpenPaymentDialog = (challengeId: number) => {
-    setPaymentId('');
-    setPaymentDialog({ open: true, challengeId });
-  };
-
-  // --- Enregistrer un paiement dans un challenge ---
-  const handleRecordPayment = async () => {
-    if (!paymentDialog.challengeId || !paymentId.trim()) {
-      toast.error("Veuillez saisir un ID de paiement.");
-      return;
-    }
-    const pid = parseInt(paymentId, 10);
-    if (isNaN(pid) || pid <= 0) {
-      toast.error("L'ID de paiement doit être un nombre entier positif.");
-      return;
-    }
-
-    setRecordingPayment(true);
-    const success = await recordChallengePayment(paymentDialog.challengeId, pid, userId);
-    if (success) {
-      toast.success("Paiement enregistré dans le challenge !");
-      setPaymentDialog({ open: false, challengeId: null });
-      setPaymentId('');
-      await loadChallenges();
-    } else {
-      toast.error("Impossible d'enregistrer ce paiement. Vérifiez que l'ID est correct, que le paiement vous appartient, et qu'il n'a pas déjà été comptabilisé.");
-    }
-    setRecordingPayment(false);
-  };
-
   const getDaysRemaining = (endDate: string) => {
     const diff = new Date(endDate).getTime() - new Date().getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
 
-  const getStatus = (pct: number, daysRemaining: number) => {
-    if (pct >= 100) return "Objectif atteint";
-    if (daysRemaining < 0) return "Terminé";
-    if (daysRemaining <= 14) return "Bientôt terminé";
-    return "En cours";
+  const getStatus = (pct: number, daysRemaining: number): { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className: string } => {
+    if (pct >= 100) return { label: "Objectif atteint", variant: "default", className: "bg-success text-white border-0" };
+    if (daysRemaining < 0) return { label: "Terminé", variant: "secondary", className: "bg-muted text-muted-foreground" };
+    if (daysRemaining <= 14) return { label: "Bientôt terminé", variant: "outline", className: "border-warning text-warning" };
+    return { label: "En cours", variant: "outline", className: "border-primary text-primary" };
   };
 
   return (
@@ -217,7 +215,7 @@ const Challenges = () => {
         </Card>
         <Card className="p-5 rounded-2xl shadow-card border bg-card/80">
           <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center mb-3">
-            <Wallet className="h-5 w-5 text-success" />
+            <Banknote className="h-5 w-5 text-success" />
           </div>
           <p className="text-sm text-muted-foreground mb-1">Remboursé ensemble</p>
           <p className="text-2xl font-display font-bold text-card-foreground">
@@ -258,6 +256,7 @@ const Challenges = () => {
           const status = getStatus(pct, daysRemaining);
           const isJoining = joiningId === challenge.id;
 
+
           return (
             <Card key={challenge.id} className="p-6 shadow-card rounded-2xl border bg-card/90">
               {/* Header */}
@@ -268,7 +267,7 @@ const Challenges = () => {
                     <h3 className="font-display text-xl font-semibold text-card-foreground">
                       {challenge.title}
                     </h3>
-                    <Badge variant="outline" className="rounded-full">{status}</Badge>
+                    <Badge variant={status.variant} className={`rounded-full ${status.className}`}>{status.label}</Badge>
                   </div>
                   <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
@@ -305,12 +304,11 @@ const Challenges = () => {
                 </div>
               </div>
 
-              {/* Progress */}
+              {/* Progress — leader vs objectif individuel */}
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">
-                    {challenge.totalPaid.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })} sur{" "}
-                    {challenge.targetAmount.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                    Leader : {challenge.totalPaid.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })} / objectif {challenge.targetAmount.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
                   </span>
                   <span className="font-semibold text-card-foreground">{pct}%</span>
                 </div>
@@ -320,7 +318,7 @@ const Challenges = () => {
               {/* Summary */}
               <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <div className="rounded-xl bg-muted/30 p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Montant remboursé</p>
+                  <p className="text-xs text-muted-foreground mb-1">Meilleur challenger</p>
                   <p className="text-lg font-display font-bold text-card-foreground">
                     {challenge.totalPaid.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
                   </p>
@@ -346,7 +344,7 @@ const Challenges = () => {
                 <Button
                   variant="outline"
                   className="rounded-xl"
-                  onClick={() => handleJoin(challenge.id)}
+                  onClick={() => handleOpenChallengerDialog(challenge.id)}
                   disabled={isJoining || challenge.status !== 0}
                 >
                   {isJoining ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Users className="h-4 w-4 mr-2" />}
@@ -354,15 +352,16 @@ const Challenges = () => {
                 </Button>
 
                 <Button
-                  variant="outline"
-                  className="rounded-xl"
-                  onClick={() => handleOpenPaymentDialog(challenge.id)}
-                  disabled={challenge.status !== 0}
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-xl text-destructive ml-auto"
+                  disabled={deletingId === challenge.id}
+                  onClick={() => handleDelete(challenge.id)}
                 >
-                  <Wallet className="h-4 w-4 mr-2" />
-                  Ajouter un paiement
+                  {deletingId === challenge.id
+                    ? <Loader2 className="h-4 w-4 animate-spin" />
+                    : <Trash2 className="h-4 w-4" />}
                 </Button>
-
               </div>
             </Card>
           );
@@ -399,19 +398,27 @@ const Challenges = () => {
               <div>
                 <h4 className="font-semibold text-card-foreground mb-3 flex items-center gap-2">
                   <Medal className="h-4 w-4 text-warning" />
-                  Classement
+                  Classement (paiements sur la période du challenge)
                 </h4>
                 {progressDialog.data.leaderboard.length === 0 && (
                   <p className="text-sm text-muted-foreground">Aucun participant pour l'instant.</p>
                 )}
                 <div className="space-y-2">
                   {progressDialog.data.leaderboard.map((entry) => (
-                    <div key={entry.rank} className="flex items-center justify-between rounded-xl bg-muted/30 px-4 py-3">
+                    <div
+                      key={entry.rank}
+                      className={`flex items-center justify-between rounded-xl px-4 py-3 ${entry.rank === 1 ? "bg-warning/10 border border-warning/30" : "bg-muted/30"}`}
+                    >
                       <span className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-muted-foreground w-6">#{entry.rank}</span>
-                        <span className="text-sm font-medium">Utilisateur {entry.userId}</span>
+                        {entry.rank === 1
+                          ? <Crown className="h-4 w-4 text-warning" />
+                          : <span className="text-sm font-bold text-muted-foreground w-4">#{entry.rank}</span>
+                        }
+                        <span className={`text-sm font-medium ${entry.rank === 1 ? "text-warning font-semibold" : ""}`}>
+                          {entry.fullName}
+                        </span>
                       </span>
-                      <Badge variant="secondary">
+                      <Badge variant={entry.rank === 1 ? "default" : "secondary"} className={entry.rank === 1 ? "bg-warning text-white border-0" : ""}>
                         {entry.amountPaid.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
                       </Badge>
                     </div>
@@ -423,36 +430,40 @@ const Challenges = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog : enregistrer un paiement dans un challenge */}
+      {/* Dialog : ajouter un challenger depuis la liste des utilisateurs */}
       <Dialog
-        open={paymentDialog.open}
-        onOpenChange={v => setPaymentDialog({ open: v, challengeId: paymentDialog.challengeId })}
+        open={challengerDialog.open}
+        onOpenChange={v => setChallengerDialog({ open: v, challengeId: challengerDialog.challengeId })}
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="font-display">Associer un paiement au challenge</DialogTitle>
+            <DialogTitle className="font-display">Ajouter un challenger</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-4">
             <p className="text-sm text-muted-foreground">
-              Saisissez l'ID d'un paiement enregistré dans l'onglet <strong>Paiements</strong>.
-              Ce paiement doit vous appartenir et ne pas avoir déjà été comptabilisé dans ce challenge.
+              Sélectionnez un utilisateur enregistré dans la base de données pour l'ajouter au challenge.
             </p>
             <div className="space-y-2">
-              <Label>ID du paiement</Label>
-              <Input
-                type="number"
-                min="1"
-                value={paymentId}
-                onChange={e => setPaymentId(e.target.value)}
-                placeholder="ex. 42"
-              />
+              <Label>Utilisateur</Label>
+              <Select value={selectedUserId} onValueChange={setSelectedUserId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choisir un utilisateur…" />
+                </SelectTrigger>
+                <SelectContent>
+                  {users.map((u) => (
+                    <SelectItem key={u.userId} value={u.userId}>
+                      {u.fullName} — {u.email}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <Button
               className="w-full gradient-primary border-0 rounded-xl"
-              onClick={handleRecordPayment}
-              disabled={recordingPayment || !paymentId}
+              onClick={handleAddChallenger}
+              disabled={addingChallenger || !selectedUserId}
             >
-              {recordingPayment ? "Enregistrement…" : "Valider"}
+              {addingChallenger ? "Ajout en cours…" : "Ajouter"}
             </Button>
           </div>
         </DialogContent>

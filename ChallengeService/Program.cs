@@ -35,6 +35,12 @@ builder.Services.AddHttpClient("PaymentService", client =>
     client.Timeout = TimeSpan.FromSeconds(10);
 });
 
+builder.Services.AddHttpClient("AuthService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:AuthService"]!);
+    client.Timeout = TimeSpan.FromSeconds(10);
+});
+
 // ServiceClient (wrapper IHttpClientFactory)
 builder.Services.AddScoped<ServiceClient>();
 

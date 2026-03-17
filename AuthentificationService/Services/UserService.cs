@@ -47,7 +47,8 @@ namespace DebtService.Services
                 Email = user.Email,
                 FullName = user.FullName,
                 AccessToken = token,
-                ExpiresAtUtc = exp
+                ExpiresAtUtc = exp,
+                MonthlyRepaymentBudget = user.MonthlyRepaymentBudget
             };
         }
 
@@ -69,7 +70,8 @@ namespace DebtService.Services
                 Email = user.Email,
                 FullName = user.FullName,
                 AccessToken = token,
-                ExpiresAtUtc = exp
+                ExpiresAtUtc = exp,
+                MonthlyRepaymentBudget = user.MonthlyRepaymentBudget
             };
         }
 
@@ -117,11 +119,21 @@ namespace DebtService.Services
             if (user is null || user.PasswordResetTokenExpiry is null || user.PasswordResetTokenExpiry < DateTime.UtcNow)
                 throw new InvalidOperationException("Token invalide ou expiré.");
 
-            // Met à jour le mot de passe et invalide le token
             user.PasswordHash = _hasher.Hash(dto.NewPassword);
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpiry = null;
             await _users.SaveChangesAsync();
+        }
+
+        public async Task<List<UserSummaryDto>> GetAllUsersAsync()
+        {
+            var users = await _users.GetAllAsync();
+            return users.Select(u => new UserSummaryDto
+            {
+                UserId = u.UserId,
+                FullName = u.FullName,
+                Email = u.Email
+            }).ToList();
         }
     }
 }

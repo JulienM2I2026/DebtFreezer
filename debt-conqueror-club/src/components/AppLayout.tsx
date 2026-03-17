@@ -15,7 +15,7 @@ const navItems = [
   { title: "Paiements", url: "/payments", icon: Receipt },
   { title: "Strategie", url: "/strategy", icon: BarChart3 },
   { title: "Challenges", url: "/challenges", icon: Trophy },
-  { title: "Profil", url: "/profile", icon: User },
+  //{ title: "Profil", url: "/profile", icon: User },
 ];
 
 function AppSidebarContent() {

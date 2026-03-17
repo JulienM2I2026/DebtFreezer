@@ -94,10 +94,11 @@ function simulatePayoff(
 }
 
 const Strategy = () => {
-  const [extraPayment, setExtraPayment] = useState(200);
+  const [extraPayment, setExtraPayment] = useState(0);
   const [debts, setDebts] = useState<DebtForSimulation[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const monthlyRepaymentBudget = Number(localStorage.getItem("monthlyRepaymentBudget") ?? 0);
 
   useEffect(() => {
     getDebts().then((data) => {
@@ -108,6 +109,7 @@ const Strategy = () => {
         remainingAmount: d.remainingAmount,
         interestRate: d.interestRate,
       })));
+      setExtraPayment(monthlyRepaymentBudget || 200);
       setLoading(false);
     });
   }, []);
@@ -197,7 +199,7 @@ const Strategy = () => {
           </div>
           <p className="text-sm text-muted-foreground mb-1">Dette totale</p>
           <p className="text-2xl font-display font-bold text-card-foreground">
-            ${totalDebt.toLocaleString()}
+            {totalDebt.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
           </p>
         </Card>
 
@@ -207,33 +209,35 @@ const Strategy = () => {
               <Gauge className="h-5 w-5 text-info" />
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mb-1">Dettes simulées</p>
+          <p className="text-sm text-muted-foreground mb-1">Budget de remboursement</p>
           <p className="text-2xl font-display font-bold text-card-foreground">
-            {debts.length}
+            {(monthlyRepaymentBudget ?? 0).toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
           </p>
+          <p className="text-xs text-muted-foreground mt-1">Budget mensuel enregistré</p>
         </Card>
 
         <Card className="p-5 rounded-2xl shadow-card border bg-card/80">
           <div className="flex items-start justify-between mb-3">
             <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
-              <Percent className="h-5 w-5 text-success" />
+              <Target className="h-5 w-5 text-success" />
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mb-1">Économie potentielle</p>
+          <p className="text-sm text-muted-foreground mb-1">Budget total simulé</p>
           <p className="text-2xl font-display font-bold text-success">
-            {savings > 0 ? `$${savings.toLocaleString()}` : "—"}
+            {((monthlyRepaymentBudget ?? 0) + extraPayment).toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
           </p>
+          <p className="text-xs text-muted-foreground mt-1">Budget initial + supplément</p>
         </Card>
 
         <Card className="p-5 rounded-2xl shadow-card border bg-card/80">
           <div className="flex items-start justify-between mb-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Target className="h-5 w-5 text-primary" />
+            <div className="w-10 h-10 rounded-xl bg-warning/10 flex items-center justify-center">
+              <Percent className="h-5 w-5 text-warning" />
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mb-1">Objectif visé</p>
-          <p className="text-2xl font-display font-bold text-card-foreground">
-            Zéro dette
+          <p className="text-sm text-muted-foreground mb-1">Économie potentielle</p>
+          <p className="text-2xl font-display font-bold text-warning">
+            {savings > 0 ? savings.toLocaleString("fr-FR", { style: "currency", currency: "EUR" }) : "—"}
           </p>
         </Card>
       </div>
@@ -245,7 +249,8 @@ const Strategy = () => {
               Budget mensuel supplémentaire
             </Label>
             <p className="text-sm text-muted-foreground">
-              Montant ajouté aux mensualités minimales.
+              S'ajoute au budget de remboursement enregistré
+              {monthlyRepaymentBudget > 0 ? ` (${monthlyRepaymentBudget.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })})` : ""}.
             </p>
           </div>
 

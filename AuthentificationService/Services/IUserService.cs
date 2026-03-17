@@ -9,5 +9,6 @@ namespace AuthentificationService.Services
         Task<UserProfileDto?> GetMeAsync(Guid userId);
         Task<ForgotPasswordResultDto> ForgotPasswordAsync(ForgotPasswordDto dto);
         Task ResetPasswordAsync(ResetPasswordDto dto);
+        Task<List<UserSummaryDto>> GetAllUsersAsync();
     }
 }

@@ -43,6 +43,9 @@ const Login = () => {
     if (data?.fullName) {
       localStorage.setItem("fullName", data.fullName);
     }
+    if (data?.monthlyRepaymentBudget !== undefined) {
+      localStorage.setItem("monthlyRepaymentBudget", String(data.monthlyRepaymentBudget));
+    }
 
     navigate("/dashboard");
     return data;

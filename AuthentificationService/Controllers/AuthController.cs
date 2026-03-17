@@ -82,6 +82,13 @@ namespace AuthentificationService.Controllers
             }
         }
 
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
         [HttpGet("/ping")]
         [Authorize]
         public IActionResult Ping()

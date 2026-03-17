@@ -8,6 +8,7 @@ namespace AuthentificationService.Repository
         Task<User?> GetByEmailAsync(string email);
         Task<User?> GetByUserIdAsync(Guid userId);
         Task<User?> GetByResetTokenAsync(string token);
+        Task<List<User>> GetAllAsync();
 
         Task AddAsync(User user);
         Task UpdateAsync(User user);

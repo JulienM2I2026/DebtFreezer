@@ -8,28 +8,28 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, CreditCard, GraduationCap, Banknote } from "lucide-react";
+import { Plus, Trash2, CreditCard, GraduationCap, Banknote, Home, Car, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 import { DebtCreateUpdateDto } from "@/dtos/DebtCreateDto";
 import { getDebts, createDebt, deleteDebt } from "@/apis/DebtApi";
 
-// Mapping enum backend (0=CREDIT_CARD, 1=PERSONAL_LOAN, 2=STUDENT_LOAN)
-const typeKeyMap: Record<number, string> = {
-  0: 'credit-card',
-  1: 'personal-loan',
-  2: 'student-loan',
+// Mapping enum backend — doit correspondre exactement à DebtService/Enums/DebtType.cs
+const typeLabels: Record<number, string> = {
+  0: 'Carte de crédit',
+  1: 'Crédit personnel',
+  2: 'Crédit étudiant',
+  3: 'Hypothèque',
+  4: 'Crédit auto',
+  5: 'Autre',
 };
 
-const typeIcons: Record<string, React.ElementType> = {
-  'credit-card': CreditCard,
-  'student-loan': GraduationCap,
-  'personal-loan': Banknote,
-};
-
-const typeLabels: Record<string, string> = {
-  'credit-card': 'Carte crédit',
-  'student-loan': 'Crédit étudiant',
-  'personal-loan': 'Crédit personnel',
+const typeIcons: Record<number, React.ElementType> = {
+  0: CreditCard,
+  1: Banknote,
+  2: GraduationCap,
+  3: Home,
+  4: Car,
+  5: HelpCircle,
 };
 
 const emptyForm: Partial<DebtCreateUpdateDto> = {
@@ -169,9 +169,12 @@ const Debts = () => {
                   >
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="0">Carte crédit</SelectItem>
+                      <SelectItem value="0">Carte de crédit</SelectItem>
                       <SelectItem value="1">Crédit personnel</SelectItem>
                       <SelectItem value="2">Crédit étudiant</SelectItem>
+                      <SelectItem value="3">Hypothèque</SelectItem>
+                      <SelectItem value="4">Crédit auto</SelectItem>
+                      <SelectItem value="5">Autre</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -195,8 +198,8 @@ const Debts = () => {
           const pct = debt.originalAmount > 0
             ? Math.round(((debt.originalAmount - remaining) / debt.originalAmount) * 100)
             : 0;
-          const typeKey = typeKeyMap[debt.type as number] ?? 'credit-card';
-          const Icon = typeIcons[typeKey] ?? CreditCard;
+          const Icon = typeIcons[debt.type as number] ?? HelpCircle;
+          const label = typeLabels[debt.type as number] ?? 'Autre';
           return (
             <Card key={debt.id} className="p-5 shadow-card hover:shadow-elevated transition-shadow">
               <div className="flex items-start justify-between mb-3">
@@ -206,7 +209,7 @@ const Debts = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-card-foreground">{debt.creditor}</p>
-                    <Badge variant="secondary" className="text-xs mt-0.5">{typeLabels[typeKey]}</Badge>
+                    <Badge variant="secondary" className="text-xs mt-0.5">{label}</Badge>
                   </div>
                 </div>
                 <Button
@@ -264,13 +267,13 @@ const Debts = () => {
           <TableBody>
             {debts.map((debt) => {
               const remaining = debt.remainingAmount ?? debt.originalAmount;
-              const typeKey = typeKeyMap[debt.type as number] ?? 'credit-card';
+              const label = typeLabels[debt.type as number] ?? 'Autre';
               const dueDate = debt.dueDate ? new Date(debt.dueDate).toLocaleDateString("fr-FR") : "—";
               return (
                 <TableRow key={debt.id}>
                   <TableCell className="font-medium">{debt.creditor}</TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-xs">{typeLabels[typeKey]}</Badge>
+                    <Badge variant="outline" className="text-xs">{label}</Badge>
                   </TableCell>
                   <TableCell className="text-right">{debt.originalAmount.toLocaleString()}€</TableCell>
                   <TableCell className="text-right">{remaining.toLocaleString()}€</TableCell>

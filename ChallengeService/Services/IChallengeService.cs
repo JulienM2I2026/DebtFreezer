@@ -11,5 +11,6 @@ namespace ChallengeService.Services
         Task<UserChallengeDto> RecordPaymentAsync(int challengeId, RecordChallengePaymentDto dto);
         Task<ChallengeProgressDto?> GetProgressAsync(int challengeId);
         Task<List<LeaderboardEntryDto>> GetLeaderboardAsync(int challengeId);
+        Task<bool> DeleteAsync(int challengeId);
     }
 }

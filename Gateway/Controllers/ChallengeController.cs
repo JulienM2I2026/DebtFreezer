@@ -70,12 +70,19 @@ namespace Gateway.Controllers
             return Content(content, "application/json");
         }
 
-        // POST /api/challenge/{id}/join — rejoint un challenge avec l'userId du token
+        // POST /api/challenge/{id}/join — rejoint un challenge
+        // Si userId est fourni dans le body, on l'utilise (ajout d'un autre utilisateur) ;
+        // sinon on utilise l'userId du token JWT.
         [HttpPost("{id}/join")]
-        public async Task<IActionResult> Join(int id)
+        public async Task<IActionResult> Join(int id, [FromBody] JoinChallengeGatewayDto? dto)
         {
-            var userId = GetCurrentUserId();
-            var body = new { UserId = userId };
+            Guid targetUserId;
+            if (dto?.UserId != null && Guid.TryParse(dto.UserId.ToString(), out var parsed) && parsed != Guid.Empty)
+                targetUserId = parsed;
+            else
+                targetUserId = GetCurrentUserId();
+
+            var body = new { UserId = targetUserId };
 
             using var http = new HttpClient();
             var json = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
@@ -120,6 +127,17 @@ namespace Gateway.Controllers
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode) return StatusCode((int)response.StatusCode, content);
             return Content(content, "application/json");
+        }
+
+        // DELETE /api/challenge/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            using var http = new HttpClient();
+            var response = await http.DeleteAsync($"{_challengeServiceUrl}/{id}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent) return NoContent();
+            var content = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, content);
         }
     }
 }

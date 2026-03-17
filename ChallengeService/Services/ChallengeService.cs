@@ -209,9 +209,12 @@ namespace ChallengeService.Services
             var participants = await _userChallengeRepository.FindAsync(
                 uc => uc.ChallengeId == challengeId);
 
-            double totalPaid = participants.Sum(uc => uc.AmountPaid);
+            var leaderboard = await BuildLeaderboardAsync(participants, challenge);
+
+            // Progression = le meilleur challenger / objectif individuel
+            double leaderAmount = leaderboard.Count > 0 ? leaderboard[0].AmountPaid : 0;
             double progress = challenge.TargetAmount > 0
-                ? Math.Round(totalPaid / challenge.TargetAmount * 100, 2)
+                ? Math.Round(leaderAmount / challenge.TargetAmount * 100, 2)
                 : 0;
 
             return new ChallengeProgressDto
@@ -219,12 +222,12 @@ namespace ChallengeService.Services
                 ChallengeId = challenge.Id,
                 Title = challenge.Title,
                 TargetAmount = challenge.TargetAmount,
-                TotalPaid = Math.Round(totalPaid, 2),
+                TotalPaid = leaderAmount,
                 ProgressPercent = Math.Min(progress, 100),
                 ParticipantCount = participants.Count,
                 Status = challenge.Status,
                 DueDate = challenge.DueDate,
-                Leaderboard = BuildLeaderboard(participants)
+                Leaderboard = leaderboard
             };
         }
 
@@ -233,10 +236,13 @@ namespace ChallengeService.Services
         // ----------------------------------------------------------------
         public async Task<List<LeaderboardEntryDto>> GetLeaderboardAsync(int challengeId)
         {
+            var challenge = await _challengeRepository.GetByIdAsync(challengeId);
+            if (challenge == null) return new List<LeaderboardEntryDto>();
+
             var participants = await _userChallengeRepository.FindAsync(
                 uc => uc.ChallengeId == challengeId);
 
-            return BuildLeaderboard(participants);
+            return await BuildLeaderboardAsync(participants, challenge);
         }
 
         // ----------------------------------------------------------------
@@ -262,9 +268,18 @@ namespace ChallengeService.Services
             var participants = await _userChallengeRepository.FindAsync(
                 uc => uc.ChallengeId == challenge.Id);
 
-            double totalPaid = participants.Sum(uc => uc.AmountPaid);
+            double leaderAmount = 0;
+            foreach (var p in participants)
+            {
+                var amount = await GetUserTotalPaymentsInChallengeAsync(p.UserId, challenge);
+                if (amount > leaderAmount) leaderAmount = amount;
+            }
+
+            leaderAmount = Math.Round(leaderAmount, 2);
+
+            // Progression basée sur le meilleur challenger vs objectif individuel
             double progress = challenge.TargetAmount > 0
-                ? Math.Round(totalPaid / challenge.TargetAmount * 100, 2)
+                ? Math.Round(leaderAmount / challenge.TargetAmount * 100, 2)
                 : 0;
 
             return new ChallengeDto
@@ -273,7 +288,7 @@ namespace ChallengeService.Services
                 Title = challenge.Title,
                 Description = challenge.Description,
                 TargetAmount = challenge.TargetAmount,
-                TotalPaid = Math.Round(totalPaid, 2),
+                TotalPaid = leaderAmount,
                 ProgressPercent = Math.Min(progress, 100),
                 DueDate = challenge.DueDate,
                 CreatorUserId = challenge.CreatorUserId,
@@ -283,18 +298,55 @@ namespace ChallengeService.Services
             };
         }
 
-        private static List<LeaderboardEntryDto> BuildLeaderboard(List<UserChallenge> participants)
+        private async Task<List<LeaderboardEntryDto>> BuildLeaderboardAsync(List<UserChallenge> participants, Challenge challenge)
         {
-            return participants
-                .OrderByDescending(uc => uc.AmountPaid)
-                .Select((uc, index) => new LeaderboardEntryDto
+            // Récupère tous les utilisateurs en une seule fois depuis AuthService
+            var allUsers = await _serviceClient.GetListAsync<ExternalUserDto>("AuthService", "/api/v1/Auth/users");
+            var userMap = allUsers.ToDictionary(u => u.UserId, u => u.FullName);
+
+            var entries = new List<(UserChallenge uc, double amount, string fullName)>();
+
+            foreach (var uc in participants)
+            {
+                var amount = await GetUserTotalPaymentsInChallengeAsync(uc.UserId, challenge);
+                var fullName = userMap.TryGetValue(uc.UserId, out var name) ? name : uc.UserId.ToString();
+                entries.Add((uc, Math.Round(amount, 2), fullName));
+            }
+
+            return entries
+                .OrderByDescending(e => e.amount)
+                .Select((e, index) => new LeaderboardEntryDto
                 {
                     Rank = index + 1,
-                    UserId = uc.UserId,
-                    AmountPaid = Math.Round(uc.AmountPaid, 2),
-                    JoinedAt = uc.JoinedAt
+                    FullName = e.fullName,
+                    AmountPaid = e.amount,
+                    JoinedAt = e.uc.JoinedAt
                 })
                 .ToList();
+        }
+
+        /// <summary>
+        /// Calcule le total des paiements d'un utilisateur dans la fenêtre temporelle du challenge
+        /// (entre CreatedAt et DueDate), en appelant PaymentService.
+        /// </summary>
+        private async Task<double> GetUserTotalPaymentsInChallengeAsync(Guid userId, Challenge challenge)
+        {
+            var payments = await _serviceClient.GetListAsync<ExternalPaymentDto>(
+                "PaymentService", $"/api/v1/Payment?userId={userId}");
+
+            return payments
+                .Where(p => p.PaymentDate >= challenge.CreatedAt && p.PaymentDate <= challenge.DueDate)
+                .Sum(p => (double)p.Amount);
+        }
+
+        public async Task<bool> DeleteAsync(int challengeId)
+        {
+            var challenge = await _challengeRepository.GetByIdAsync(challengeId);
+            if (challenge == null) return false;
+
+            await _challengeRepository.DeleteAsync(challenge);
+            await _challengeRepository.SaveChangesAsync();
+            return true;
         }
 
         private static UserChallengeDto MapToUserChallengeDto(UserChallenge uc) => new()

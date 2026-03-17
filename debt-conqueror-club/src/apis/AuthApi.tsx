@@ -16,6 +16,25 @@ export interface UserProfile {
   repaymentStrategy: number; // 1 = Snowball, 2 = Avalanche
 }
 
+export interface UserSummary {
+  userId: string;
+  fullName: string;
+  email: string;
+}
+
+export async function getUsers(): Promise<UserSummary[]> {
+  try {
+    const response = await fetch(`${BASE}/api/v1/Auth/users`, {
+      headers: authHeaders(),
+    });
+    if (!response.ok) return [];
+    return response.json();
+  } catch (error) {
+    console.error("Failed to load users", error);
+    return [];
+  }
+}
+
 export async function getMe(): Promise<UserProfile | null> {
   try {
     const response = await fetch(`${BASE}/api/v1/Auth/me`, {

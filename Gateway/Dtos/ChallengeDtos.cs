@@ -53,15 +53,15 @@ namespace Gateway.Dtos
     public class LeaderboardEntryDto
     {
         public int Rank { get; set; }
-        public int UserId { get; set; }
+        public string FullName { get; set; } = string.Empty;
         public double AmountPaid { get; set; }
         public DateTime JoinedAt { get; set; }
     }
 
-    // Pour rejoindre un challenge
+    // Pour rejoindre un challenge (userId optionnel — si absent, le Gateway utilise le token)
     public class JoinChallengeGatewayDto
     {
-        // UserId injecté depuis le token par le Gateway
+        public object? UserId { get; set; }
     }
 
     // Pour enregistrer un paiement dans un challenge

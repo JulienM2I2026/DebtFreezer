@@ -35,7 +35,7 @@ export interface ChallengeProgressDto {
 
 export interface LeaderboardEntryDto {
   rank: number;
-  userId: number;
+  fullName: string;
   amountPaid: number;
   joinedAt: string;
 }
@@ -125,6 +125,19 @@ export async function getChallengeProgress(
   } catch (error) {
     console.error("Failed to load challenge progress", error);
     return null;
+  }
+}
+
+export async function deleteChallenge(id: number): Promise<boolean> {
+  try {
+    const response = await fetch(`${BASE}/api/v1/Challenge/${id}`, {
+      method: "DELETE",
+      headers: authHeaders(),
+    });
+    return response.ok;
+  } catch (error) {
+    console.error("Failed to delete challenge", error);
+    return false;
   }
 }
 
